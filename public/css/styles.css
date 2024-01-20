@@ -13,7 +13,16 @@ CSS Styles for CSE Motors
     1.52 Delorean Reviews
     1.53 Delorean Upgrades
   1.6 Footer
-
+2. Media Queries
+  2.0 General
+  2.1 Header
+  2.2 Navigation
+  2.3 Body
+    2.30 Welcome
+    2.31 Call to Action
+    2.32 Delorean Reviews
+    2.33 Delorean Upgrades
+  2.4 Footer
 ********************************************/
 
 /******* 1.0 @imports *************/
@@ -75,9 +84,11 @@ nav ul li a:hover {
 
 /******* 1.5 Body *************/
 body {
+  margin: 0 auto;
   font-family: Lato, sans-serif;
   background-color: #f2f2f2;
   padding: 1rem;
+  max-width: 1200px;
 }
 
 /******* 1.50 Welcome *************/
@@ -93,22 +104,23 @@ body {
   color: white;
   padding: 1rem;
   position: absolute;
-  top: 45%;
-  left: 25%;
+  top: 38%;
+  left: 20%;
   transform: translate(-50%, -50%);
-  padding: 20px;
+  padding: 5px;
   text-align: center;
 }
 
 .callToAction p, h3{
-  color:rgb(21, 222, 236);
+  color:rgb(6, 122, 131);
+  font-size: medium;
   font-weight: bolder;
   margin: 5px;
 }
 
 .callToAction button {
   background-color: rgb(21, 222, 236);
-  padding: .25rem;
+  padding: .5rem;
 }
 
 /******* 1.52 Delorean Reviews *************/
@@ -117,8 +129,126 @@ body {
 }
 
 /******* 1.53 Delorean Upgrades *************/
-.delorean-upgrades img{
+.delorean-upgrades {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 95%;
+}
+
+.item {
+  text-align: center;
   background-color: rgb(21, 222, 236);
+  border: solid 1px black;
+}
+
+.item img {
+  display: block;
+  margin: 0 auto;
   padding: 1rem;
-  border: 1px solid black;
+}
+
+.item a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.item a:hover {
+  color: #ff0000;
+}
+
+/******* 1.6 Footer *************/
+footer{
+  max-width: 1200px;
+}
+
+/******* Media Queries *************/
+/******* 2.0 General *************/
+@media (min-width: 750px) {
+
+  /******* 2.1 Header *************/
+  .siteName {
+    font-size: 3rem;
+  }
+
+  #tools {
+    width: 15%;
+    font-size: 1.25rem;
+  }
+
+  /******* 2.2 Navigation *************/
+  nav ul li a {
+    font-size: x-large;
+  }
+
+  /******* 2.3 Body *************/
+
+  /******* 2.30 Welcome *************/
+  .welcome img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  /******* 2.31 Call to Action *************/
+  .callToAction {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: white;
+    position: absolute;
+    top: 65%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    text-align: center;
+  }
+
+  .callToAction p, h3{
+    color:rgb(6, 122, 131);
+    font-size: x-large;
+    font-weight: bolder;
+    margin: 15px;
+  }
+
+  .callToAction button {
+    background-color: rgb(21, 222, 236);
+    padding: 1rem;
+    font-size: x-large;
+  }
+
+  /******* 2.32 Delorean Reviews *************/
+  .delorean-reviews ul li {
+    padding: 10px 0px;
+  }
+
+  /******* 2.33 Delorean Upgrades *************/
+  .delorean-upgrades {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .item {
+    text-align: center;
+    background-color: rgb(21, 222, 236);
+    border: solid 1px black;
+  }
+
+  .item img {
+    display: block;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .item a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .item a:hover {
+    color: #ff0000;
+  }
+
+  /******* 2.4 Footer *************/
 }
