@@ -89,6 +89,7 @@ nav ul li a:hover {
   font-family: Lato, sans-serif;
   background-color: white;
   padding: 1rem;
+  font-family : Lato, sans-serif;
 }
 
 /******* 1.50 Welcome *************/
@@ -160,16 +161,13 @@ nav ul li a:hover {
 
 /******* 1.6 Footer *************/
 footer{
-  max-width: 1200px;
+  max-width: 1000px;
+  padding: 1rem;
 }
 
 /******* Media Queries *************/
 /******* 2.0 General *************/
 @media (min-width: 900px) {
-
-  body {
-    background-image: none;
-  };
 
   /******* 2.1 Header *************/
   .siteName {
@@ -228,11 +226,36 @@ footer{
   }
 
   /******* 2.32 Delorean Reviews *************/
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .delorean-reviews {
+    flex: 0 0 48%;
+    margin: 2rem;
+    order: 2;
+    white-space: inherit;
+  }
+
   .delorean-reviews ul li {
     font-size: large;
   }
 
   /******* 2.33 Delorean Upgrades *************/
+  .upgrades {
+    flex: 0 0 48%;
+    margin: 1rem;
+    order: 1;
+    gap: 1rem;
+  }
   
   /******* 2.4 Footer *************/
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
 }
