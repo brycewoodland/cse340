@@ -2,7 +2,7 @@ CREATE TYPE public.account_type AS ENUM
     ('Client', 'Employee', 'Admin');
 
 ALTER TYPE public.account_type
-    OWNER TO cse340131;
+   OWNER TO cse340131;
 
 -- Table structure for table 'classification'
 CREATE TABLE public.classification (
@@ -239,7 +239,7 @@ VALUES   (
 
 -- Query 4
 UPDATE public.inventory
-SET inv_description = REPLACE(inv_description, 'small interiors', 'a huge interior')
+SET inv_description = REPLACE(inv_description, 'the small interiors', 'a huge interior')
 WHERE inv_id = 10;
 
 -- Query 6

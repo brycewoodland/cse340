@@ -2,7 +2,9 @@
     "sqltools.connections": [
         {
             "pgOptions": {
-                "ssl": true
+                "ssl": {
+                    "rejectUnauthorized": true
+                }
             },
             "previewLimit": 50,
             "server": "localhost",
