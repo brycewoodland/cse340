@@ -13,16 +13,19 @@ CSS Styles for CSE Motors
     1.52 Delorean Reviews
     1.53 Delorean Upgrades
   1.6 Footer
-2. Media Queries
-  2.0 General
-  2.1 Header
-  2.2 Navigation
-  2.3 Body
-    2.30 Welcome
-    2.31 Call to Action
-    2.32 Delorean Reviews
-    2.33 Delorean Upgrades
-  2.4 Footer
+2. Classification Card
+  2.0 Inv Display
+  2.1 Name Price
+3. Media Queries
+  3.0 General
+  3.1 Header
+  3.2 Navigation
+  3.3 Body
+    3.30 Welcome
+    3.31 Call to Action
+    3.32 Delorean Reviews
+    3.33 Delorean Upgrades
+  3.4 Footer
 ********************************************/
 
 /******* 1.0 @imports *************/
@@ -105,7 +108,7 @@ nav ul li a:hover {
   color: white;
   padding: 1rem;
   position: absolute;
-  top: 38%;
+  top: 55%;
   left: 20%;
   transform: translate(-50%, -50%);
   padding: 5px;
@@ -165,11 +168,67 @@ footer{
   padding: 1rem;
 }
 
+/*********** Classifications ***********/
+/******* 2.1 Inv Display *************/
+#inv-display {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+}
+
+#inv-display a {
+  color: black;
+  text-decoration: none;
+}
+
+#inv-display a:hover {
+  color: #ff0000;
+}
+
+#inv-display li {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  flex: 0 0 25%;
+  border: 2px solid gray;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin: 1rem;
+}
+
+#inv-display hr {
+  width: 200px;
+  height: 5px;
+  background-color: black;
+}
+
+#inv-display img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+/******* 2.2 Name Price *************/
+.namePrice h2 {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+
+.namePrice {
+  text-align: center;
+  padding: 1rem;
+  font-weight: bold;
+  margin-top: auto;
+}
+
 /******* Media Queries *************/
-/******* 2.0 General *************/
+/******* 3.0 General *************/
 @media (min-width: 900px) {
 
-  /******* 2.1 Header *************/
+  /******* 3.1 Header *************/
   .siteName {
     font-size: 3rem;
   }
@@ -179,12 +238,12 @@ footer{
     font-size: 1.25rem;
   }
 
-  /******* 2.2 Navigation *************/
+  /******* 3.2 Navigation *************/
   nav ul li a {
     font-size: x-large;
   }
 
-  /******* 2.3 Body *************/
+  /******* 3.3 Body *************/
   body {
     background-image: url('../images/site/checkerboard.jpg');
   }
@@ -194,18 +253,18 @@ footer{
     border-radius: 8px;
   }
   
-  /******* 2.30 Welcome *************/
+  /******* 3.30 Welcome *************/
   .welcome img {
     height: 50%;
     justify-content: center;
     position: relative;
   }
 
-  /******* 2.31 Call to Action *************/
+  /******* 3.31 Call to Action *************/
   .callToAction {
     color: white;
     position: absolute;
-    top: 55%;
+    top: 65%;
     left: 35%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -225,7 +284,7 @@ footer{
     font-size: large;
   }
 
-  /******* 2.32 Delorean Reviews *************/
+  /******* 3.32 Delorean Reviews *************/
   .container {
     display: flex;
     flex-wrap: wrap;
@@ -243,7 +302,7 @@ footer{
     font-size: large;
   }
 
-  /******* 2.33 Delorean Upgrades *************/
+  /******* 3.33 Delorean Upgrades *************/
   .upgrades {
     flex: 0 0 48%;
     margin: 1rem;
@@ -251,7 +310,7 @@ footer{
     gap: 1rem;
   }
   
-  /******* 2.4 Footer *************/
+  /******* 3.4 Footer *************/
   footer {
     display: flex;
     justify-content: space-between;
