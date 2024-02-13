@@ -71,6 +71,7 @@ Util.buildVehicleView = async function (data) {
   grid += '<p><strong>Mileage: </strong>' + 
     new Intl.NumberFormat('en-Us').format(data.inv_miles) + '</p>';
   grid += '<p><strong>Color:</strong> ' + data.inv_color + '</p>';
+  grid += '<p><strong>Description: </strong>' + data.inv_description + '</p>';
   grid += '</div></div>';
   return grid;
 };
