@@ -358,7 +358,7 @@ footer{
 
   .vehicle {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 20px;
   }
 
@@ -370,6 +370,7 @@ footer{
 
   .vehicleInfo {
     grid-column: 2 / 3;
+    margin: auto;
   }
 
   .vehicle h2 {
