@@ -16,16 +16,22 @@ CSS Styles for CSE Motors
 2. Classification Card
   2.0 Inv Display
   2.1 Name Price
-3. Media Queries
-  3.0 General
-  3.1 Header
-  3.2 Navigation
-  3.3 Body
-    3.30 Welcome
-    3.31 Call to Action
-    3.32 Delorean Reviews
-    3.33 Delorean Upgrades
-  3.4 Footer
+3. Vehicle Details
+  3.0 Vehicle
+  3.1 Vehicle Info
+4. Media Queries
+  4.0 General
+  4.1 Header
+  4.2 Navigation
+  4.3 Body
+    4.30 Welcome
+    4.31 Call to Action
+    4.32 Delorean Reviews
+    4.33 Delorean Upgrades
+  4.4 Footer
+5. Vehicle Details
+  5.0 Vehicle
+  5.1 Vehicle Info
 ********************************************/
 
 /******* 1.0 @imports *************/
@@ -224,11 +230,38 @@ footer{
   margin-top: auto;
 }
 
+/******* 3. Vehicle Details *************/
+/******* 3.0 Vehicle *************/
+.vehicle {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+}
+
+.vehicle img {
+  width: 100%;
+  height: auto;
+  border: black 3px solid;
+}
+
+/******* 3.1 Vehicle Info *************/
+.vehicleInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1rem;
+  border: 2px solid gray;
+  border-radius: 8px;
+  box-shadow: black 5px 5px 5px;
+  margin-top: 20px;
+}
+
 /******* Media Queries *************/
-/******* 3.0 General *************/
+/******* 4.0 General *************/
 @media (min-width: 900px) {
 
-  /******* 3.1 Header *************/
+  /******* 4.1 Header *************/
   .siteName {
     font-size: 3rem;
   }
@@ -238,12 +271,12 @@ footer{
     font-size: 1.25rem;
   }
 
-  /******* 3.2 Navigation *************/
+  /******* 4.2 Navigation *************/
   nav ul li a {
     font-size: x-large;
   }
 
-  /******* 3.3 Body *************/
+  /******* 4.3 Body *************/
   body {
     background-image: url('../images/site/checkerboard.jpg');
   }
@@ -253,14 +286,14 @@ footer{
     border-radius: 8px;
   }
   
-  /******* 3.30 Welcome *************/
+  /******* 4.30 Welcome *************/
   .welcome img {
     height: 50%;
     justify-content: center;
     position: relative;
   }
 
-  /******* 3.31 Call to Action *************/
+  /******* 4.31 Call to Action *************/
   .callToAction {
     color: white;
     position: absolute;
@@ -284,7 +317,7 @@ footer{
     font-size: large;
   }
 
-  /******* 3.32 Delorean Reviews *************/
+  /******* 4.32 Delorean Reviews *************/
   .container {
     display: flex;
     flex-wrap: wrap;
@@ -302,7 +335,7 @@ footer{
     font-size: large;
   }
 
-  /******* 3.33 Delorean Upgrades *************/
+  /******* 4.33 Delorean Upgrades *************/
   .upgrades {
     flex: 0 0 48%;
     margin: 1rem;
@@ -310,11 +343,42 @@ footer{
     gap: 1rem;
   }
   
-  /******* 3.4 Footer *************/
+  /******* 4.4 Footer *************/
   footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+  }
+}
+
+/******* 5. Vehicle Details *************/
+/******* 5.0 Vehicle *************/
+@media (min-width: 820px) {
+
+  .vehicle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .vehicle img {
+    width: 100%;
+    grid-column: 1 / 2;
+    margin: auto;
+    }
+
+  .vehicleInfo {
+    grid-column: 2 / 3;
+  }
+
+  .vehicle h2 {
+    grid-column: 1 / 3;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .vehicleInfo p {
+    font-size: 1.25rem;
   }
 }
