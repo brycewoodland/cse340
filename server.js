@@ -12,6 +12,7 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const errorRouter = require("./routes/errorRoute")
 const utilities = require("./utilities/")
 
 /* ***********************
@@ -29,9 +30,12 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", utilities.handleErrors(inventoryRoute))
+// Error route
+app.use("/error", utilities.handleErrors(errorRouter))
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
-  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+  next(
+    {status: 404, subject: "We lost this Page!", message: "We searched high and low, but it's gone. Maybe try a different route?"})
 })
 
 /* ***********************
@@ -41,11 +45,19 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
+  let subject = err.subject || 'Server Error'
+  const errorImgURL = '/images/site/errorImage.jpg'
+  if(err.status == 404){ 
+    message = err.message
+  } else {
+    message = 'Oh no! There was a crash. Maybe try a different route?'
+  }
   res.render("errors/error", {
-    title: err.status || 'Server Error',
+    title: err.status || '500',
+    subject,
     message,
-    nav
+    nav,
+    errorImgURL
   })
 })
 

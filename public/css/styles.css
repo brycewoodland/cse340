@@ -257,6 +257,23 @@ footer{
   margin-top: 20px;
 }
 
+/********** Error Page ***********/
+/********** 4.0 Error Page ***********/
+h1 {
+  text-align: center;
+  font-size: 3rem;
+}
+.error p {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+img {
+  display: block;
+  width: 50%;
+  margin: auto;
+}
+
 /******* Media Queries *************/
 /******* 4.0 General *************/
 @media (min-width: 820px) {
@@ -345,7 +362,6 @@ footer{
   
   /******* 4.4 Footer *************/
   footer {
-    display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;

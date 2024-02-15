@@ -4,4 +4,8 @@
     res.redirect('/')
 } %>
 
-<%- message %>
+<div class="error">
+<h1><%-subject %></h1>
+<p><%- message %></p>
+<img src="<%- errorImgURL %>" alt="Error Pic">
+</div>
