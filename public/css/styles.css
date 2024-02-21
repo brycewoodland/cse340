@@ -105,7 +105,12 @@ nav ul li a:hover {
 .welcome img {
   width: 100%;
   height: auto;
-  position: relative;
+}
+
+.notice {
+  display: flex;
+  justify-content: center;
+  color: red;
 }
 
 /******* 1.51 Call to Action *************/
