@@ -12,6 +12,7 @@ CSS Styles for CSE Motors
     1.51 Call to Action
     1.52 Delorean Reviews
     1.53 Delorean Upgrades
+    1.54 Notice Flash
   1.6 Footer
 2. Classification Card
   2.0 Inv Display
@@ -19,6 +20,10 @@ CSS Styles for CSE Motors
 3. Vehicle Details
   3.0 Vehicle
   3.1 Vehicle Info
+6. Login Page
+  6.0 Login
+  6.1 Register
+  6.2 Logout
 4. Media Queries
   4.0 General
   4.1 Header
@@ -107,6 +112,7 @@ nav ul li a:hover {
   height: auto;
 }
 
+/********** 1.54 Notice ***********/
 .notice {
   display: flex;
   justify-content: center;
@@ -277,6 +283,40 @@ img {
   display: block;
   width: 50%;
   margin: auto;
+}
+
+/********** Login Page ***********/
+/********** 6.0 Login ***********/
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.form {
+  border: 2px solid silver;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.login-container form {
+  width: 400px;
+  background-color: rgb(21, 222, 236);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.login input {
+  display: block;
+  margin: 5px;
+  padding: 5px;
+  width: 200px;
+}
+
+#sign-up {
+  text-align: center;
 }
 
 /******* Media Queries *************/

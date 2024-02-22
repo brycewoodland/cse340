@@ -1,0 +1,20 @@
+<% (title) %>
+<h1><%= title %></h1>
+    
+<%- messages() %>
+
+<section class="login-container">
+<form class="login" action="/login" method="post">
+    <div class="form">
+        <label>Email:</label>
+        <input type="text" name="username" value="" required>
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        <p><i>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</i></p>
+        <button>LOGIN</button>
+    </div>
+    <div>
+        <h4 id="sign-up">No account? <a href="#">Sign-up</a></h4>
+    </div>
+</section>
+    
