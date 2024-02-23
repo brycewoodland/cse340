@@ -6,6 +6,14 @@
 
 <%- messages() %>
 
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
 <section class="register-container">
     <div>
         <p><i>ALL FIELDS ARE REQUIRED.</i></p>

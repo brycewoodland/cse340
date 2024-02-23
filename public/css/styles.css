@@ -114,8 +114,6 @@ nav ul li a:hover {
 
 /********** 1.54 Notice ***********/
 .notice {
-  display: flex;
-  justify-content: center;
   color: red;
 }
 
