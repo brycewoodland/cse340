@@ -1,5 +1,8 @@
-<% (title) %>
-<h1><%= title %></h1>
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
     
 <%- messages() %>
 
@@ -14,7 +17,7 @@
         <button>LOGIN</button>
     </div>
     <div>
-        <h4 id="sign-up">No account? <a href="#">Sign-up</a></h4>
+        <h4 id="sign-up">No account? <a href="/account/register">Sign-up</a></h4>
     </div>
 </section>
     

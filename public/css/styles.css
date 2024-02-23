@@ -319,6 +319,49 @@ img {
   text-align: center;
 }
 
+/********** 6.1 Register ***********/
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.register-container form {
+  width: 400px;
+  background-color: rgb(21, 222, 236);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.register-container input {
+  display: block;
+  margin: 5px;
+  padding: 5px;
+  width: 200px;
+}
+
+.register-container button {
+  margin: 5px;
+  padding: 5px;
+  width: 200px;
+}
+
+#show-password {
+  margin: 5px;
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.register {
+  border: 2px solid silver;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
 /******* Media Queries *************/
 /******* 4.0 General *************/
 @media (min-width: 820px) {
