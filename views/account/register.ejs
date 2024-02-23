@@ -15,10 +15,10 @@
             <label>Last Name:</label>
             <input type="text" name="account_lastname" required>
             <label>Email:</label>
-            <input type="email" name="account_email" required>
+            <input type="email" name="account_email" required placeholder="Enter a valid email address">
             <label>Password:</label>
-            <input type="password" name="account_password" required>
-            <p><i>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</i></p>
+            <input type="password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+            <div><p><i>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</i></p></div>
             <button id="show-password">Show Password</button>
             <button>Register</button>
         </form>
