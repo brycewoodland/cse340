@@ -11,7 +11,7 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 router.get("/detail/:invId", invController.buildVehicleById);
 
 // Route to build management view
-router.get("/inv", invController.buildManage);
+router.get("/", invController.buildManage);
 // router.get("site-name/inv/", invController.buildManagement);
 
 module.exports = router;

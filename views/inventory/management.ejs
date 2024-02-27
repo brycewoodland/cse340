@@ -4,7 +4,8 @@
         res.redirect('/')
     } %>
     
-    <% messages() %>
-
-    <a href="new-classification">Add New Classification</a>
-    <a href="new-inventory">Add New Vehicle</a>
+    <%# messages() %>
+    <ul class="management-links">
+        <li><a href="/inv/addClassification">Add New Classification</a></li>
+        <li><a href="/inv/addInventory">Add New Inventory</a></li>
+    </ul>

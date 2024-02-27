@@ -368,6 +368,12 @@ input:required:valid, input:focus:valid {
   border: 2px solid green;
 }
 
+/********** 6.2 Management ***********/
+.management-links li {
+  padding: 0.25rem;
+  font-size: larger;
+}
+
 /******* Media Queries *************/
 /******* 4.0 General *************/
 @media (min-width: 820px) {
