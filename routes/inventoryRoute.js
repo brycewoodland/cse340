@@ -10,4 +10,8 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 // Route to build individual vehicle view
 router.get("/detail/:invId", invController.buildVehicleById);
 
+// Route to build management view
+router.get("/inv", invController.buildManage);
+// router.get("site-name/inv/", invController.buildManagement);
+
 module.exports = router;

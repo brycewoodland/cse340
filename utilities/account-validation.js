@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs")
 /*  **********************************
  *  Registration Data Validation Rules
  * ********************************* */
-validate.registationRules = () => {
+validate.registrationRules = () => {
     return [
       // firstname is required and must be string
       body("account_firstname")
@@ -29,7 +29,7 @@ validate.registationRules = () => {
         .withMessage("A valid email is required.")
         .custom(async (account_email) => {
           const emailExists = await accountModel.checkExistingEmail(account_email)
-          if (emailExists){
+          if (emailExists) {
             throw new Error("Email exists. Please log in or use different email")
           }
         }),
@@ -81,7 +81,7 @@ validate.checkRegData = async (req, res, next) => {
         .normalizeEmail()
         .withMessage("A valid email is required.")
         .custom(async (account_email, { req }) => {
-          const user = await accountModel.getUserByEmail(account_email)
+          const user = await accountModel.checkExistingEmail(account_email)
           if (!user) {
             throw new Error("Invalid email or password")
           }

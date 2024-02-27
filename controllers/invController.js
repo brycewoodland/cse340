@@ -35,4 +35,17 @@ invCont.buildVehicleById = async function (req, res, next) {
   })
 }
 
+/* ****************************************
+ *  Deliver Manage view
+ * *************************************** */
+invCont.buildManage = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  req.flash("notice", "Welcome to the Vehicle Management!")
+  res.render("./inventory/management", {
+    title: "Vehicle Management",
+    nav,
+    messages: req.flash("notice"),
+  });
+}
+
 module.exports = invCont

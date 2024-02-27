@@ -76,6 +76,11 @@ Util.buildVehicleView = async function (data) {
   return grid;
 };
 
+/* **************************************
+* Build the management view HTML
+* ************************************ */
+
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
