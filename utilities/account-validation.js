@@ -2,7 +2,7 @@ const utilities = require(".")
 const { body, validationResult } = require("express-validator")
 const validate = {}
 const accountModel = require("../models/account-model")
-
+const bcrypt = require("bcryptjs")
 
 /*  **********************************
  *  Registration Data Validation Rules
@@ -69,5 +69,40 @@ validate.checkRegData = async (req, res, next) => {
     }
     next()
   }
-  
+
+  /*  **********************************
+  *  Login Data Validation Rules
+  * ********************************* */
+  validate.loginRules = () => {
+    return [
+      body("account_email")
+        .trim()
+        .isEmail()
+        .normalizeEmail()
+        .withMessage("A valid email is required.")
+        .custom(async (account_email, { req }) => {
+          const user = await accountModel.getUserByEmail(account_email)
+          if (!user) {
+            throw new Error("Invalid email or password")
+          }
+          req.user = user // storing user object for later use in middleware
+        }),
+
+      body("account_password")
+        .trim()
+        .notEmpty()
+        .withMessage("Password is required.")
+        .custom(async (account_password, { req }) => {
+          const user = req.user
+          if (!user) {
+            return // If user is not found, the error has already been thrown for invalid email
+          }
+          const passwordMatch = await bcrypt.compare(account_password, user.account_password)
+          if (!passwordMatch) {
+            throw new Error("Invalid email or password")
+          }
+        })
+    ]
+}
+          
   module.exports = validate
