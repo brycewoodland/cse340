@@ -79,23 +79,32 @@ async function registerAccount(req, res) {
 * Process Login
 **************************** */
 async function processLogin(req, res) {
-  const { account_email, account_password } = req.body;
+  let nav = await utilities.getNav()
+  const { account_email, account_password } = req.body
 
   try {
-    const user = await accountModel.checkExistingEmail(account_email);
+    const user = await accountModel.loginAccount(account_email)
 
-    if (!user || !(await bcrypt.compare(account_password, user.account_password))) {
-      req.flash("notice", "Invalid email or password.");
-      return res.redirect("/account/login");
+    if (user && bcrypt.compareSync(account_password, user.account_password)) {
+      req.flash("notice", "Successfully logged in.")
+      res.status(200).render("account/login", { 
+        title: "Login",
+        nav,
+      })
+    } else {
+      req.flash("notice", "Invalid email or password.")
+      res.status(401).render("account/login", {
+        title: "Login",
+        nav,
+      })
     }
-
-    req.session.user = user;
-    res.redirect("/");
   } catch (error) {
-    console.error("Login error:", error);
-    req.flash("notice", "Sorry, there was an error processing the login.");
-    res.redirect("/account/login");
+    req.flash("notice", "An error occurred while logging in.")
+    res.status(500).render("account/login", {
+      title: "Login",
+      nav,
+    })
   }
 }
-  
+
 module.exports = { buildLogin, buildRegister, registerAccount, processLogin }

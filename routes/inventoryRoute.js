@@ -12,6 +12,8 @@ router.get("/detail/:invId", invController.buildVehicleById);
 
 // Route to build management view
 router.get("/", invController.buildManage);
-// router.get("site-name/inv/", invController.buildManagement);
+
+// Route to build add-classification view
+router.get("/add-classification", invController.addClassification);
 
 module.exports = router;

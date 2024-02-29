@@ -374,6 +374,35 @@ input:required:valid, input:focus:valid {
   font-size: larger;
 }
 
+/* ******* 6.3 Add Classification *************/
+.add-classification-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.add-classification-form form {
+  width: 400px;
+  background-color: rgb(21, 222, 236);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.add-classification-form input {
+  display: block;
+  margin: 5px;
+  padding: 5px;
+  width: 200px;
+}
+
+.add-classification-form button {
+  margin: 5px;
+  padding: 5px;
+  width: 150px;
+}
+
 /******* Media Queries *************/
 /******* 4.0 General *************/
 @media (min-width: 820px) {

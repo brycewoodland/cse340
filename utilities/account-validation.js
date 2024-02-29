@@ -79,29 +79,19 @@ validate.checkRegData = async (req, res, next) => {
         .trim()
         .isEmail()
         .normalizeEmail()
-        .withMessage("A valid email is required.")
-        .custom(async (account_email, { req }) => {
-          const user = await accountModel.checkExistingEmail(account_email)
-          if (!user) {
-            throw new Error("Invalid email or password")
-          }
-          req.user = user // storing user object for later use in middleware
-        }),
+        .withMessage("A valid email is required."),
 
+        // password is required and must be strong password
       body("account_password")
-        .trim()
-        .notEmpty()
-        .withMessage("Password is required.")
-        .custom(async (account_password, { req }) => {
-          const user = req.user
-          if (!user) {
-            return // If user is not found, the error has already been thrown for invalid email
-          }
-          const passwordMatch = await bcrypt.compare(account_password, user.account_password)
-          if (!passwordMatch) {
-            throw new Error("Invalid email or password")
-          }
-        })
+      .trim()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements."),
     ]
 }
           

@@ -40,9 +40,19 @@ invCont.buildVehicleById = async function (req, res, next) {
  * *************************************** */
 invCont.buildManage = async function (req, res, next) { 
   let nav = await utilities.getNav();
-  req.flash("info", "Welcome to the Vehicle Management page")
   res.render("./inventory/management", {
     title: "Vehicle Management",
+    nav,
+  });
+}
+
+/* ****************************************
+ *  Deliver Add Classification view
+ * *************************************** */
+invCont.addClassification = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("./inventory/add-classification", {
+    title: "Add Classification",
     nav,
   });
 }
