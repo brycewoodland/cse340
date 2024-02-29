@@ -4,15 +4,15 @@
     res.redirect('/')
 } %>
     
-<%# messages() %>
+<%- messages() %>
 
 <section class="add-classification-form">
     <p><i>FIELD IS REQUIRED</i></p>
-    <form action="/inventory/add-classification" method="POST">
-        <label for="classificationName">Classification Name:</label>
+    <form action="/inv/add-classification" method="POST">
+        <label for="classification_name">Classification Name:</label>
         <hr>
         <small><i>Please enter a name without spaces or special characters.</i></small>
-        <input type="text" id="classificationName" name="classificationName" pattern="^[^\s\W]+$" required>
+        <input type="text" id="classification_name" name="classification_name" pattern="^[a-zA-Z0-9]+$" required>
         <button type="submit">Add Classification</button>
     </form>
 </section>

@@ -49,7 +49,8 @@ invCont.buildManage = async function (req, res, next) {
 /* ****************************************
  *  Deliver Add Classification view
  * *************************************** */
-invCont.addClassification = async function (req, res, next) {
+invCont.buildClassification = async function (req, res, next) {
+
   let nav = await utilities.getNav();
   res.render("./inventory/add-classification", {
     title: "Add Classification",
@@ -58,9 +59,34 @@ invCont.addClassification = async function (req, res, next) {
 }
 
 /* ****************************************
+*  Process Add Classification view
+* *************************************** */
+invCont.addClassification = async function (req, res, next) {
+  const { classification_name } = req.body
+
+  const result = await invModel.addClassification(classification_name)
+
+  if (result) {
+    let nav = await utilities.getNav();
+    req.flash("notice", "Classification added successfully.")
+    res.status(201).render("./inventory/add-classification", {
+      title: "Add Classification",
+      nav,
+    })
+  } else {
+    let nav = await utilities.getNav();
+    req.flash("notice", "Sorry, there was an error adding the classification.")
+    res.status(501).render("./inventory/add-classification", {
+      title: "Add Classification",
+      nav,
+    })
+  }
+}
+
+/* ****************************************
  *  Deliver Add Inventory view
  * *************************************** */
-invCont.addInventory = async function (req, res, next) {
+invCont.buildInventory = async function (req, res, next) {
   let nav = await utilities.getNav();
   const list = await utilities.buildClassificationList()
   res.render("./inventory/add-inventory", {

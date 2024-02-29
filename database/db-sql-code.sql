@@ -272,3 +272,7 @@ inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
 Select * FROM public.inventory;
 
 SELECT * FROM public.account;
+
+SELECT * FROM public.classification;
+
+DELETE FROM public.classification WHERE classification_id = 21;
