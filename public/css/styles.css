@@ -403,6 +403,29 @@ input:required:valid, input:focus:valid {
   width: 150px;
 }
 
+/********** 6.4 Add Vehicle ***********/
+.add-inventory-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.add-inventory-form form {
+  width: 400px;
+  background-color: rgb(21, 222, 236);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.add-inventory-form input, textarea, select {
+  display: block;
+  margin: 5px;
+  padding: 5px;
+  width: 200px;
+}
+
 /******* Media Queries *************/
 /******* 4.0 General *************/
 @media (min-width: 820px) {

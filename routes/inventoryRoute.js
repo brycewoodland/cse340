@@ -16,4 +16,7 @@ router.get("/", invController.buildManage);
 // Route to build add-classification view
 router.get("/add-classification", invController.addClassification);
 
+// Route to build add-inventory view
+router.get("/add-inventory", invController.addInventory);
+
 module.exports = router;

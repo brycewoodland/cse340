@@ -57,4 +57,17 @@ invCont.addClassification = async function (req, res, next) {
   });
 }
 
+/* ****************************************
+ *  Deliver Add Inventory view
+ * *************************************** */
+invCont.addInventory = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  const list = await utilities.buildClassificationList()
+  res.render("./inventory/add-inventory", {
+    title: "Add Inventory",
+    nav,
+    list,
+  });
+}
+
 module.exports = invCont

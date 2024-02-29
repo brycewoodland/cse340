@@ -4,5 +4,31 @@
     res.redirect('/')
 } %>
         
-    <%# messages() %>
+<%# messages() %>
 
+<section class="add-inventory-form">
+    <form action="/inventory/add-inventory" method="POST">
+        <p><i>ALL FIELDS ARE REQUIRED</i></p>
+        <hr>
+        <%- list %>
+        <label for="inv_make">Vehicle Make:</label>
+        <input type="text" id="inv_make" name="inv_make" value="<% locals.inv_make %>" required>
+        <label for="inv_model">Vehicle Model:</label>
+        <input id="inv_model" name="inv_model" value="<% locals.inv_model %>" required> 
+        <label for="inv_description">Description:</label>
+        <textarea id="inv_description" name="inv_description" value="<% locals.inv_description %>" rows="4" cols="30" required></textarea>
+        <label for="inv_img">Image Path:</label>
+        <input type="text" id="inv_img" name="inv_img" value="<% locals.inv_img %>" required>
+        <label for="inv_thumbnail">Thumbnail Path:</label>
+        <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="<% locals.inv_thumbnail %>" required>
+        <label for="inv_price">Price:</label>
+        <input type="text" id="inv_price" name="inv_price" value="<% locals.inv_price %>" required>
+        <label for="inv_year">Year:</label>
+        <input type="text" id="inv_year" name="inv_year" value="<% locals.inv_year %>" required></select>
+        <label for="inv_miles">Miles:</label>
+        <input type="text" id="inv_miles" name="inv_miles" value="<% locals.inv_miles %>" required>
+        <label for="inv_color">Color:</label>
+        <input type="text" id="inv_color" name="inv_color" value="<% locals.inv_color %>" required>
+        <button type="submit">Add Vehicle</button>
+    </form>
+</section>
