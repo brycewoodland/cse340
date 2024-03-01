@@ -59,12 +59,12 @@ async function addClassification(classification_name) {
 /* ****************************************
 * Add a vehicle to the database
 ***************************************** */
-async function addVehicle(vehicleData) {
+async function addVehicle(classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) {
   try {
     const data = await pool.query(
-      `INSERT INTO public.inventory (classification_id, inv_make, inv_model, inv_description, inv_img, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) 
+      `INSERT INTO public.inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) 
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-      [vehicleData.classification_id, vehicleData.inv_make, vehicleData.inv_model, vehicleData.inv_description, vehicleData.inv_img, vehicleData.inv_thumbnail, vehicleData.inv_price, vehicleData.inv_year, vehicleData.inv_miles, vehicleData.inv_color]
+      [classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color]
     )
     return data
     } catch (error) {

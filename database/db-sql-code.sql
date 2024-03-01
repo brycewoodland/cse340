@@ -275,4 +275,6 @@ SELECT * FROM public.account;
 
 SELECT * FROM public.classification;
 
-DELETE FROM public.classification WHERE classification_id = 61;
+DELETE FROM public.classification WHERE classification_id = 63;
+
+DELETE FROM public.inventory WHERE inv_id = 26;

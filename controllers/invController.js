@@ -97,7 +97,8 @@ invCont.buildInventory = async function (req, res, next) {
 /* ****************************************
  *  Process Add Inventory view
  * *************************************** */
-invCont.addInventory = async function (req, res, next) {
+invCont.addInventory = async function (req, res) {
+  let nav = await utilities.getNav();
   const {
     classification_id,
     inv_make,
@@ -125,16 +126,11 @@ invCont.addInventory = async function (req, res, next) {
     )
 
   if (result) {
-    let nav = await utilities.getNav();
     req.flash("notice", "Inventory added successfully.")
-    res.status(201).render("./inventory/add-inventory", {
-      title: "Add Inventory",
-      nav,
-    })
+    res.status(201).redirect("/inv")
   } else {
-    let nav = await utilities.getNav();
     req.flash("notice", "Sorry, there was an error adding the inventory.")
-    res.status(500).render("./inventory/add-inventory", {
+    res.status(501).render("/inv/add-inventory", {
       title: "Add Inventory",
       nav,
     })

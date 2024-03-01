@@ -45,48 +45,76 @@ validate.inventoryRules = () => {
     // classification_id is required and must be chosen from the list
     body("classification_id")
       .custom(async (value) => {
-        const classification = await invModel.getClassificationById(value)
+        const classification = await invModel.getInventoryByClassificationId(value)
         if (!classification) {
           return Promise.reject("Please provide a valid classification id.")
         }
       }),
     // inventory make is required and must be string
     body("inv_make")
-      .isLength({ min: 2 })
-      .withMessage("Please provide a name that meets the requirments."), // on error this message is sent.
+      .notEmpty().withMessage("Please provide a make.")
+      .isLength({ min: 2 }),
     // inventory model is required and must be string
     body("inv_model")
-      .isLength({ min: 2 })
-      .withMessage("Please provide a name that meets the requirments."), // on error this message is sent.
+      .notEmpty().withMessage("Please provide a model.")
+      .isLength({ min: 2 }), 
     // inventory description is required and must be string
     body("inv_description")
-      .isLength({ min: 2 })
-      .withMessage("Please provide a description that meets the requirments."), // on error this message is sent.
+      .notEmpty().withMessage("Please provide a description.")
+      .isLength({ min: 2 }), 
     // inventory img is required and must be a string
     body("inv_image")
-      .isLength({ min: 2})
-      .withMessage("Please provide a valid image url."), // on error this message is sent.
+      .notEmpty().withMessage("Please provide a valid image url.")
+      .isLength({ min: 2}),
     // inventory thumbnail is required and must be a string
     body("inv_thumbnail")
-      .isLength({ min: 2})
-      .withMessage("Please provide a valid thumbnail url."), // on error this message is sent.
+      .notEmpty().withMessage("Please provide a valid thumbnail url.")
+      .isLength({ min: 2}),
     // inventory price is required and must be a number
     body("inv_price")
-      .isNumeric()
-      .withMessage("Please provide a valid price."), // on error this message is sent.
+      .notEmpty().withMessage("Please provide a price.")
+      .isNumeric(),
     // inventory year is required and must be a number
     body("inv_year")
-      .isNumeric()
-      .withMessage("Please provide a valid year."), // on error this message is sent.
+      .notEmpty().withMessage("Please provide a year.")
+      .isNumeric(),
     // inventory miles is required and must be a number
     body("inv_miles")
-      .isNumeric()
-      .withMessage("Please provide a valid miles."), // on error this message is sent.
+      .notEmpty().withMessage("Please provide miles.")
+      .isNumeric(),
     // inventory color is required and must be a string
     body("inv_color")
-      .isLength({ min: 2 })
-      .withMessage("Please provide a valid color."), // on error this message is sent.
+      .notEmpty().withMessage("Please provide a color.")
+      .isLength({ min: 2 }),
   ]
+}
+
+/* **********************************
+* Inventory Data Validation: Middleware
+* ********************************* */
+validate.checkInventoryData = async (req, res, next) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    const list = await utilities.buildClassificationList()
+    res.render("inventory/add-inventory", {
+      errors,
+      title: "Add Inventory",
+      nav,
+      list,
+      inv_make: req.body.inv_make,
+      inv_model: req.body.inv_model,
+      inv_description: req.body.inv_description,
+      inv_image: req.body.inv_image,
+      inv_thumbnail: req.body.inv_thumbnail,
+      inv_price: req.body.inv_price,
+      inv_year: req.body.inv_year,
+      inv_miles: req.body.inv_miles,
+      inv_color: req.body.inv_color,
+    })
+    return
+  }
+  next();
 }
 
 module.exports = validate;

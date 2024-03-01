@@ -6,29 +6,37 @@
         
 <% messages() %>
 
+<% if (errors) { %>
+<ul class="notice">
+<% errors.array().forEach(error => { %>
+<li><%= error.msg %></li>
+<%  }) %>
+</ul>
+<% } %>
+
 <section class="add-inventory-form">
     <form action="/inv/add-inventory" method="POST">
         <p><i>ALL FIELDS ARE REQUIRED</i></p>
         <hr>
         <%- list %>
         <label for="inv_make">Vehicle Make:</label>
-        <input type="text" id="inv_make" name="inv_make" value="<% locals.inv_make %>" required>
+        <input type="text" id="inv_make" name="inv_make" value="<%= locals.inv_make %>" required>
         <label for="inv_model">Vehicle Model:</label>
-        <input id="inv_model" name="inv_model" value="<% locals.inv_model %>" required> 
+        <input id="inv_model" name="inv_model" value="<%= locals.inv_model %>" required> 
         <label for="inv_description">Description:</label>
-        <textarea id="inv_description" name="inv_description" value="<% locals.inv_description %>" rows="4" cols="30" required></textarea>
+        <textarea id="inv_description" name="inv_description" value="<%= locals.inv_description %>" rows="4" cols="30" required></textarea>
         <label for="inv_image">Image Path:</label>
-        <input type="text" id="inv_image" name="inv_image" value="<% locals.inv_image %>" required>
+        <input type="text" id="inv_image" name="inv_image" value="<%= locals.inv_image %>" required>
         <label for="inv_thumbnail">Thumbnail Path:</label>
-        <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="<% locals.inv_thumbnail %>" required>
+        <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="<%= locals.inv_thumbnail %>" required>
         <label for="inv_price">Price:</label>
-        <input type="text" id="inv_price" name="inv_price" value="<% locals.inv_price %>" required>
+        <input type="text" id="inv_price" name="inv_price" value="<%= locals.inv_price %>" required>
         <label for="inv_year">Year:</label>
-        <input type="text" id="inv_year" name="inv_year" value="<% locals.inv_year %>" required></select>
+        <input type="text" id="inv_year" name="inv_year" value="<%= locals.inv_year %>" required>
         <label for="inv_miles">Miles:</label>
-        <input type="text" id="inv_miles" name="inv_miles" value="<% locals.inv_miles %>" required>
+        <input type="text" id="inv_miles" name="inv_miles" value="<%= locals.inv_miles %>" required>
         <label for="inv_color">Color:</label>
-        <input type="text" id="inv_color" name="inv_color" value="<% locals.inv_color %>" required>
+        <input type="text" id="inv_color" name="inv_color" value="<%= locals.inv_color %>" required>
         <button type="submit">Add Vehicle</button>
     </form>
 </section>
