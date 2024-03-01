@@ -62,31 +62,18 @@ invCont.buildClassification = async function (req, res, next) {
 /* ****************************************
 *  Process Add Classification view
 * *************************************** */
-invCont.addClassification = async function (req, res, next) {
+invCont.addClassification = async function (req, res) {
+  let nav = await utilities.getNav();
   const { classification_name } = req.body
 
-  try {
-    const result = await invModel.addClassification(classification_name)
+  const result = await invModel.addClassification(classification_name)
 
-    if (result) {
-      let nav = await utilities.getNav();
-      req.flash("notice", "Classification added successfully.")
-      res.status(201).render("./inventory/add-classification", {
-        title: "Add Classification",
-        nav,
-      })
-    } else {
-      let nav = await utilities.getNav();
-      req.flash("notice", "Sorry, there was an error adding the classification.")
-      res.status(400).render("./inventory/add-classification", {
-        title: "Add Classification",
-        nav,
-      })
-    }
-  } catch (err) {
-    let nav = await utilities.getNav();
-    req.flash("notice", err.message)
-    res.status(400).render("./inventory/add-classification", {
+  if (result) {
+    req.flash("notice", "Classification added successfully.")
+    res.status(201).redirect("/inv")
+  } else {
+    req.flash("notice", "Sorry, there was an error adding the classification.")
+    res.status(501).render("/inv/add-classification", {
       title: "Add Classification",
       nav,
     })
