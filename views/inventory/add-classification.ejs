@@ -14,7 +14,7 @@
 </ul>
 <% } %>
 
-<section class="add-classification-form">
+<div class="add-classification-form">
     <p><i>FIELD IS REQUIRED</i></p>
     <form action="/inv/add-classification" method="POST">
         <label for="classification_name">Classification Name:</label>
@@ -23,4 +23,4 @@
         <input type="text" id="classification_name" name="classification_name" pattern="^[a-zA-Z0-9]*$" required>
         <button type="submit">Add Classification</button>
     </form>
-</section>
+</div>
