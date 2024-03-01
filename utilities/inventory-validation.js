@@ -17,9 +17,12 @@ validate.classificationRules = () => {
   ];
 };
 
+/* **********************************
+* Classification Data Validation: Middleware
+* ********************************* */
 validate.checkClassificationData = async (req, res, next) => {
   const { classification_name } = req.body;
-  let erros = []
+  let errors = []
   errors = validationResult(req);
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
