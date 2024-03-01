@@ -4,7 +4,13 @@
     res.redirect('/')
 } %>
     
-<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+<% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+<%  }) %>
+</ul>
+<% } %>
 
 <section class="add-classification-form">
     <p><i>FIELD IS REQUIRED</i></p>
@@ -12,7 +18,7 @@
         <label for="classification_name">Classification Name:</label>
         <hr>
         <small><i>Please enter a name without spaces or special characters.</i></small>
-        <input type="text" id="classification_name" name="classification_name" pattern="^[a-zA-Z0-9]+$" required>
+        <input type="text" id="classification_name" name="classification_name" pattern="^[a-zA-Z0-9]*$" required>
         <button type="submit">Add Classification</button>
     </form>
 </section>

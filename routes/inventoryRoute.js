@@ -3,7 +3,7 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController");
 const { handleErrors } = require("../utilities");
-const invValidate = require("../utilities/inventory-validation");
+const validate = require("../utilities/inventory-validation");
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId);
@@ -18,9 +18,12 @@ router.get("/", invController.buildManage);
 router.get("/add-classification", invController.buildClassification);
 
 // Route to post add-classification view
-router.post('/add-classification', invValidate.classificationRules(), invController.addClassification);
+router.post('/add-classification', validate.classificationRules(), validate.checkClassificationData, invController.addClassification);
 
 // Route to build add-inventory view
 router.get("/add-inventory", invController.buildInventory);
+
+// Route to post add-inventory view
+// router.post("/add-inventory", validate.inventoryRules(), invController.addInventory);
 
 module.exports = router;
