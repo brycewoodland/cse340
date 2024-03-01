@@ -40,53 +40,53 @@ validate.checkClassificationData = async (req, res, next) => {
 /*  **********************************
 * Inventory Data Validation Rules
 * ********************************* */
-// validate.inventoryRules = () => {
-//   return [
-//     // classification_id is required and must be chosen from the list
-//     body("classification_id")
-//       .custom(async (value) => {
-//         const classification = await invModel.getClassificationById(value)
-//         if (!classification) {
-//           return Promise.reject("Please provide a valid classification id.")
-//         }
-//       }),
-//     // inventory make is required and must be string
-//     body("inv_make")
-//       .isLength({ min: 2 })
-//       .withMessage("Please provide a name that meets the requirments."), // on error this message is sent.
-//     // inventory model is required and must be string
-//     body("inv_model")
-//       .isLength({ min: 2 })
-//       .withMessage("Please provide a name that meets the requirments."), // on error this message is sent.
-//     // inventory description is required and must be string
-//     body("inv_description")
-//       .isLength({ min: 2 })
-//       .withMessage("Please provide a description that meets the requirments."), // on error this message is sent.
-//     // inventory img is required and must be a string
-//     body("inv_image")
-//       .isLength({ min: 2})
-//       .withMessage("Please provide a valid image url."), // on error this message is sent.
-//     // inventory thumbnail is required and must be a string
-//     body("inv_thumbnail")
-//       .isLength({ min: 2})
-//       .withMessage("Please provide a valid thumbnail url."), // on error this message is sent.
-//     // inventory price is required and must be a number
-//     body("inv_price")
-//       .isNumeric()
-//       .withMessage("Please provide a valid price."), // on error this message is sent.
-//     // inventory year is required and must be a number
-//     body("inv_year")
-//       .isNumeric()
-//       .withMessage("Please provide a valid year."), // on error this message is sent.
-//     // inventory miles is required and must be a number
-//     body("inv_miles")
-//       .isNumeric()
-//       .withMessage("Please provide a valid miles."), // on error this message is sent.
-//     // inventory color is required and must be a string
-//     body("inv_color")
-//       .isLength({ min: 2 })
-//       .withMessage("Please provide a valid color."), // on error this message is sent.
-//   ]
-// }
+validate.inventoryRules = () => {
+  return [
+    // classification_id is required and must be chosen from the list
+    body("classification_id")
+      .custom(async (value) => {
+        const classification = await invModel.getClassificationById(value)
+        if (!classification) {
+          return Promise.reject("Please provide a valid classification id.")
+        }
+      }),
+    // inventory make is required and must be string
+    body("inv_make")
+      .isLength({ min: 2 })
+      .withMessage("Please provide a name that meets the requirments."), // on error this message is sent.
+    // inventory model is required and must be string
+    body("inv_model")
+      .isLength({ min: 2 })
+      .withMessage("Please provide a name that meets the requirments."), // on error this message is sent.
+    // inventory description is required and must be string
+    body("inv_description")
+      .isLength({ min: 2 })
+      .withMessage("Please provide a description that meets the requirments."), // on error this message is sent.
+    // inventory img is required and must be a string
+    body("inv_image")
+      .isLength({ min: 2})
+      .withMessage("Please provide a valid image url."), // on error this message is sent.
+    // inventory thumbnail is required and must be a string
+    body("inv_thumbnail")
+      .isLength({ min: 2})
+      .withMessage("Please provide a valid thumbnail url."), // on error this message is sent.
+    // inventory price is required and must be a number
+    body("inv_price")
+      .isNumeric()
+      .withMessage("Please provide a valid price."), // on error this message is sent.
+    // inventory year is required and must be a number
+    body("inv_year")
+      .isNumeric()
+      .withMessage("Please provide a valid year."), // on error this message is sent.
+    // inventory miles is required and must be a number
+    body("inv_miles")
+      .isNumeric()
+      .withMessage("Please provide a valid miles."), // on error this message is sent.
+    // inventory color is required and must be a string
+    body("inv_color")
+      .isLength({ min: 2 })
+      .withMessage("Please provide a valid color."), // on error this message is sent.
+  ]
+}
 
 module.exports = validate;
