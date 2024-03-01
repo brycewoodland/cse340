@@ -126,10 +126,10 @@ invCont.addInventory = async function (req, res) {
     )
 
   if (result) {
-    req.flash("notice", "Inventory added successfully.")
+    req.flash("notice", "Vehicle added successfully to the inventory.")
     res.status(201).redirect("/inv")
   } else {
-    req.flash("notice", "Sorry, there was an error adding the inventory.")
+    req.flash("notice", "Sorry, there was an error adding the vehicle to the inventory.")
     res.status(501).render("/inv/add-inventory", {
       title: "Add Inventory",
       nav,

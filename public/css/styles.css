@@ -360,11 +360,11 @@ img {
   padding: 1rem;
 }
 
-input:required:invalid, input:focus:invalid {
+input:required:focus:invalid {
   border: 2px solid red;
 }
 
-input:required:valid, input:focus:valid {
+input:required:focus:valid {
   border: 2px solid green;
 }
 
