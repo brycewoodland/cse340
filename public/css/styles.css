@@ -384,7 +384,7 @@ input:required:focus:valid {
 }
 
 .add-classification-form form {
-  width: 400px;
+  width: 300px;
   background-color: rgb(21, 222, 236);
   padding: 1rem;
   border-radius: 8px;
@@ -413,7 +413,7 @@ input:required:focus:valid {
 }
 
 .add-inventory-form form {
-  width: 400px;
+  width: 300px;
   background-color: rgb(21, 222, 236);
   padding: 1rem;
   border-radius: 8px;
@@ -547,5 +547,14 @@ input:required:focus:valid {
 
   .vehicleInfo p {
     font-size: 1.25rem;
+  }
+
+  /******* 6.3 Add Classification *************/
+  .add-classification-form form {
+    width: 400px;
+  }
+
+  .add-inventory-form form {
+    width: 400px;
   }
 }
