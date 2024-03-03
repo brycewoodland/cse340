@@ -79,13 +79,17 @@ Util.buildVehicleView = async function (data) {
 /* ************************************************
 * Build the drop down for classification of vehicle
 * *********************************************** */
-Util.buildClassificationList = async function (req, res, next) {
+Util.buildClassificationList = async function (classification_id) {
   let data = await invModel.getClassifications();
   let list = '<label for="classification_id">Classification:</label>'
   list += '<select name="classification_id" id="classification_id" required>'
   list += '<option value="">Choose a Classification</option>'
   data.rows.forEach((row) => {
-    list += '<option value="' + row.classification_id + '">' + row.classification_name + '</option>'
+    let selected = '';
+    if (classification_id && row.classification_id.toString() === classification_id.toString()) {
+      selected = 'selected';
+    }
+    list += '<option value="' + row.classification_id + '"' + selected + '>' + row.classification_name + '</option>'
   });
   list += '</select>'
   return list
