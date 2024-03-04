@@ -114,7 +114,11 @@ nav ul li a:hover {
 
 /********** 1.54 Notice ***********/
 .notice {
-  color: red;
+  list-style-type: none;
+  background-color: rgb(223, 174, 174);
+  font: italic bold 1rem Lato, sans-serif;
+  padding: 0.5rem;
+  margin: 1rem;
 }
 
 /******* 1.51 Call to Action *************/
@@ -424,6 +428,12 @@ input:required:focus:valid {
   margin: 5px;
   padding: 5px;
   width: 200px;
+}
+
+.add-inventory-form button {
+  margin: 5px;
+  padding: 5px;
+  width: 150px;
 }
 
 /******* Media Queries *************/
