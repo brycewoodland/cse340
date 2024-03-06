@@ -275,6 +275,9 @@ SELECT * FROM public.account;
 
 SELECT * FROM public.classification;
 
-DELETE FROM public.classification WHERE classification_id = 63;
+DELETE FROM public.classification WHERE classification_id = 64;
 
 DELETE FROM public.inventory WHERE inv_id = 26;
+
+-- change user to admin
+UPDATE public.account SET account_type = 'Admin' WHERE account_id = 13;

@@ -10,7 +10,6 @@ validate.classificationRules = () => {
   return [
     // classification name is required and must be string without leading or trailing spaces
     body("classification_name")
-      .notEmpty().withMessage("Please provide a classification name.")
       .trim() // Remove leading and trailing whitespace
       .isLength({ min: 1 })
       .matches(/^[a-zA-Z0-9]*$/).withMessage("Please enter a name without spaces or special characters."), // Only letters, numbers, and spaces allowed 

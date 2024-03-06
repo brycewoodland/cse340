@@ -1,6 +1,8 @@
 const utilities = require("../utilities")
 const accountModel = require("../models/account-model")
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ****************************************
 *  Deliver login view
@@ -10,6 +12,7 @@ async function buildLogin(req, res, next) {
     res.render("account/login", {
       title: "Login",
       nav,
+      errors: null,
     })
   }
 
@@ -75,36 +78,45 @@ async function registerAccount(req, res) {
   }
 }
 
-/* ****************************
-* Process Login
-**************************** */
-async function processLogin(req, res) {
+/* ****************************************
+ *  Process login request
+ * ************************************ */
+async function accountLogin(req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
-
-  try {
-    const user = await accountModel.loginAccount(account_email)
-
-    if (user && bcrypt.compareSync(account_password, user.account_password)) {
-      req.flash("notice", "Successfully logged in.")
-      res.status(200).render("account/login", { 
-        title: "Login",
-        nav,
-      })
-    } else {
-      req.flash("notice", "Invalid email or password.")
-      res.status(401).render("account/login", {
-        title: "Login",
-        nav,
-      })
-    }
-  } catch (error) {
-    req.flash("notice", "An error occurred while logging in.")
-    res.status(500).render("account/login", {
-      title: "Login",
-      nav,
-    })
+  const accountData = await accountModel.getAccountByEmail(account_email)
+  if (!accountData) {
+   req.flash("notice", "Please check your credentials and try again.")
+   res.status(400).render("account/login", {
+    title: "Login",
+    nav,
+    errors: null,
+    account_email,
+   })
+  return
   }
+  try {
+   if (await bcrypt.compare(account_password, accountData.account_password)) {
+   delete accountData.account_password
+   const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+   res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+   return res.redirect("/account/")
+   }
+  } catch (error) {
+   return new Error('Access Forbidden')
+  }
+ }
+
+/* ****************************************
+* Deliver Account Mangement View
+* *************************************** */
+async function buildManagement(req, res) {
+  let nav = await utilities.getNav()
+  res.render("account/management", {
+    title: "Account Management",
+    nav,
+    errors: null,
+  })
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, processLogin }
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement }
