@@ -37,6 +37,7 @@ CSS Styles for CSE Motors
 5. Vehicle Details
   5.0 Vehicle
   5.1 Vehicle Info
+6. Vehicle Management Table
 ********************************************/
 
 /******* 1.0 @imports *************/
@@ -434,6 +435,40 @@ input:required:focus:valid {
   margin: 5px;
   padding: 5px;
   width: 150px;
+}
+
+/******** 6.5 Vehicle Management Table *************/
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem, 1rem;
+}
+
+#inventoryDisplay th {
+  background-color: rgb(21, 222, 236);
+  padding: 1rem;
+  text-align: center;
+}
+
+#inventoryDisplay tr:nth-child(even) {
+  background-color: rgb(242, 239, 239);
+}
+
+#inventoryDisplay tr:hover {
+  background-color: #ddd;
+}
+
+#inventoryDisplay th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(21, 222, 236);
+  color: black;
+}
+
+#inventoryDisplay td {
+  padding: 8px;
+  text-align: left;
 }
 
 /******* Media Queries *************/
