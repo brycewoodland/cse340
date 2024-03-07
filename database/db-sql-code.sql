@@ -280,4 +280,4 @@ DELETE FROM public.classification WHERE classification_id = 64;
 DELETE FROM public.inventory WHERE inv_id = 26;
 
 -- change user to admin
-UPDATE public.account SET account_type = 'Admin' WHERE account_id = 13;
+UPDATE public.account SET account_type = 'Employee' WHERE account_id = 17;

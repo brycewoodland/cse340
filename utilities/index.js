@@ -8,7 +8,7 @@ require('dotenv').config()
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
-  let list = "<ul>"
+  let list = '<ul>'
   list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
     list += "<li>"
@@ -84,7 +84,7 @@ Util.buildVehicleView = async function (data) {
 Util.buildClassificationList = async function (classification_id) {
   let data = await invModel.getClassifications();
   let list = '<label for="classification_id">Classification:</label>'
-  list += '<select name="classification_id" id="classification_id" required>'
+  list += '<select name="classification_id" id="classificationList" required>'
   list += '<option value="">Choose a Classification</option>'
   data.rows.forEach((row) => {
     let selected = '';
@@ -124,6 +124,18 @@ Util.checkJWTToken = (req, res, next) => {
     })
   } else {
    next()
+  }
+ }
+
+ /* ****************************************
+ *  Check Login
+ * ************************************ */
+ Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
   }
  }
  
