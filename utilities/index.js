@@ -83,8 +83,7 @@ Util.buildVehicleView = async function (data) {
 * *********************************************** */
 Util.buildClassificationList = async function (classification_id) {
   let data = await invModel.getClassifications();
-  let list = '<label for="classification_id">Classification:</label>'
-  list += '<select name="classification_id" id="classificationList" required>'
+  let list = '<select name="classification_id" id="classificationList" required>'
   list += '<option value="">Choose a Classification</option>'
   data.rows.forEach((row) => {
     let selected = '';

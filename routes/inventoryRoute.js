@@ -32,4 +32,7 @@ router.get("/getInventory/:classification_id", handleErrors(invController.getInv
 // Route to edit-inventory view
 router.get("/edit/:invId", handleErrors(invController.buildEditInventory));
 
+// Route to post edit-inventory view
+router.post("/update/", validate.inventoryRules(), validate.checkUpdateData, handleErrors(invController.updateInventory))
+
 module.exports = router;
