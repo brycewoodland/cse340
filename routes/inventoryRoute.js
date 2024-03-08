@@ -29,4 +29,7 @@ router.post("/add-inventory", validate.inventoryRules(), validate.checkInventory
 // Route to build edit-inventory view
 router.get("/getInventory/:classification_id", handleErrors(invController.getInventoryJSON));
 
+// Route to edit-inventory view
+router.get("/edit/:invId", handleErrors(invController.buildEditInventory));
+
 module.exports = router;
