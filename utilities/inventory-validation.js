@@ -82,12 +82,12 @@ validate.inventoryRules = () => {
     // inventory year is required and must be a number
     body("inv_year")
       .trim()
-      .isNumeric()
+      .isInt()
       .withMessage("Please provide a year."),
     // inventory miles is required and must be a number
     body("inv_miles")
       .trim()
-      .isNumeric()
+      .isInt()
       .withMessage("Please provide the mileage."),
     // inventory color is required and must be a string
     body("inv_color")

@@ -111,14 +111,14 @@ Util.checkJWTToken = (req, res, next) => {
    jwt.verify(
     req.cookies.jwt,
     process.env.ACCESS_TOKEN_SECRET,
-    function (err, accountData) {
+    function (err, firstName) {
      if (err) {
       req.flash("Please log in")
       res.clearCookie("jwt")
       return res.redirect("/account/login")
      }
-     res.locals.accountData = accountData
-     res.locals.loggedin = 1
+     res.locals.firstName = firstName
+     res.locals.isLoggedIn = 1
      next()
     })
   } else {
@@ -130,12 +130,12 @@ Util.checkJWTToken = (req, res, next) => {
  *  Check Login
  * ************************************ */
  Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
+  if (res.locals.isLoggedIn) {
     next()
   } else {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
   }
  }
- 
+
 module.exports = Util

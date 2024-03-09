@@ -10,6 +10,7 @@ require("dotenv").config()
 async function buildLogin(req, res, next) {
     let nav = await utilities.getNav()
     res.render("account/login", {
+      isLoggedIn: false,
       title: "Login",
       nav,
       errors: null,
@@ -22,6 +23,7 @@ async function buildLogin(req, res, next) {
 async function buildRegister(req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/register", {
+    isLoggedIn: false,
     title: "Register",
     nav,
     errors: null,
@@ -85,9 +87,11 @@ async function accountLogin(req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
   const accountData = await accountModel.getAccountByEmail(account_email)
+  console.log(accountData)
   if (!accountData) {
    req.flash("notice", "Please check your credentials and try again.")
    res.status(400).render("account/login", {
+    isLoggedIn: false,
     title: "Login",
     nav,
     errors: null,
@@ -100,7 +104,10 @@ async function accountLogin(req, res) {
    delete accountData.account_password
    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
-   return res.redirect("/account/")
+   req.session.isLoggedIn = true
+   req.session.firstName = accountData.account_firstname
+   req.session.account_email = accountData.account_email
+   return res.redirect("/account/",)
    }
   } catch (error) {
    return new Error('Access Forbidden')
@@ -112,11 +119,30 @@ async function accountLogin(req, res) {
 * *************************************** */
 async function buildManagement(req, res) {
   let nav = await utilities.getNav()
-  res.render("account/management", {
-    title: "Account Management",
-    nav,
-    errors: null,
-  })
+  if (req.session.isLoggedIn) {
+    const accountData = await accountModel.getAccountByEmail(req.session.account_email)
+    console.log(accountData)
+    req.session.firstName = accountData.account_firstname
+    res.render("account/management", {
+      isLoggedIn: true,
+      firstName: req.session.firstName,
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    res.redirect("/account/login")
+  }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement }
+/* ****************************************
+* Logout
+* *************************************** */
+async function accountLogout(req, res) {
+  req.session.isLoggedIn = false;
+  req.session.firstName = null;
+  res.redirect('/account/login');
+};
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout }

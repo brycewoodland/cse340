@@ -65,16 +65,29 @@ CSS Styles for CSE Motors
 
 #tools {
   display: flex;
-  color: black;
-  text-decoration: none;
-  width: 20%;
-  float: right;
   align-items: center;
+  justify-content: flex-end;
+  float: right;
+  text-wrap: nowrap;
 }
 
 #tools a {
   color: black;
   text-decoration: none;
+  /* margin-right: 10px; */
+}
+
+#tools a:hover {
+  color: #007bff;
+}
+
+#Welcome-message {
+  font-weight: bold;
+  margin-right: 10px;
+} 
+
+#myAccount {
+  font-weight: bold;
 }
 
 /******* 1.4 Navigation *************/
