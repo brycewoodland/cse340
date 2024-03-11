@@ -126,15 +126,29 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
- /* ****************************************
- *  Check Login
- * ************************************ */
- Util.checkLogin = (req, res, next) => {
-  if (res.locals.isLoggedIn) {
-    next()
+/* ****************************************
+* Middleware to check login
+**************************************** */
+Util.checkLogin = (req, res, next) => {
+  if (req.cookies.jwt) {
+   jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, firstName) {
+     if (err) {
+      req.flash("Please log in")
+      res.clearCookie("jwt")
+      res.locals.isLoggedIn = false;
+      res.locals.firstName = "";
+      return res.redirect("/account/login")
+     }
+     res.locals.firstName = firstName
+     res.locals.isLoggedIn = true;
+     next()
+    })
   } else {
-    req.flash("notice", "Please log in.")
-    return res.redirect("/account/login")
+   req.flash("Please log in")
+   res.redirect("/account/login")
   }
  }
 

@@ -3,9 +3,9 @@
         <a href="/" title="Return to home page">CSE Motors</a>
     </span>
     <div id="tools">
-        <% if (isLoggedIn) { %>
-            <a id="Welcome-message" href="/account/">Welcome <%= firstName %> </a>
-            <a href="/account/login"> Logout</a>
+        <% if (locals.isLoggedIn) { %>
+            <a id="Welcome-message" href="/account/">Welcome <%= locals.firstName %> </a>
+            <a href="/account/logout"> Logout</a>
         <% } else { %>
             <a id="myAccount" href="/account/login">My Account</a>
         <% } %>

@@ -256,7 +256,7 @@ invCont.deleteInventory = async function (req, res, next) {
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
   res.render("./inventory/delete-confirm", {
     firstName: req.session.firstName,
-    title: "Edit " + itemName,
+    title: "Delete " + itemName,
     nav,
     errors: null,
     inv_id: itemData.inv_id,
@@ -281,14 +281,14 @@ invCont.deleteInventoryPost = async function (req, res, next) {
 
   if (updateResult) {
     const itemName = updateResult.inv_make + " " + updateResult.inv_model
-    req.flash("notice", `The deletion was successfully deleted.`)
+    req.flash("notice", `The vehicle was successfully deleted.`)
     res.redirect("/inv/")
   } else {
     const list = await utilities.buildClassificationList(classification_id)
     const itemName = `${inv_make} ${inv_model}`
     req.flash("notice", "Sorry, the deletion failed.")
     res.status(501).render("inventory/delete-confirm", {
-    title: "Edit " + itemName,
+    title: "Delete " + itemName,
     nav,
     list: list,
     errors: null,
