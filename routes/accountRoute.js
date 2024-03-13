@@ -12,7 +12,7 @@ router.post("/register", regValidate.registrationRules(), regValidate.checkRegDa
 router.post("/login", regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin))
 
 // Default route
-router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+router.get("/", utilities.handleErrors(accountController.buildManagement))
 
 // Logout
 router.get('/logout', accountController.accountLogout)

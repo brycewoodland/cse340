@@ -8,14 +8,25 @@ require("dotenv").config()
 *  Deliver login view
 * *************************************** */
 async function buildLogin(req, res, next) {
-    let nav = await utilities.getNav()
-    res.render("account/login", {
-      isLoggedIn: false,
-      title: "Login",
-      nav,
-      errors: null,
-    })
+  let nav = await utilities.getNav()
+  let isLoggedIn = false;
+
+  if (req.cookies.jwt) {
+    try {
+      jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET);
+      isLoggedIn = true;
+    } catch (err) {
+      console.log(err);
+    }
   }
+  res.render("account/login", {
+    isLoggedIn: isLoggedIn,
+    firstName: req.session.firstName,
+    title: "Login",
+    nav,
+    errors: null,
+  })
+}
 
 /* ****************************************
 *  Deliver registration view

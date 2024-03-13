@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accountModel = require("../models/account-model")
 const Util = {}
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -137,7 +138,6 @@ Util.checkLogin = (req, res, next) => {
     function (err, firstName) {
      if (err) {
       req.flash("Please log in")
-      res.clearCookie("jwt")
       res.locals.isLoggedIn = false;
       res.locals.firstName = "";
       return res.redirect("/account/login")
@@ -151,5 +151,33 @@ Util.checkLogin = (req, res, next) => {
    res.redirect("/account/login")
   }
  }
+
+/* ****************************************
+* Middleware to check admin or employee
+**************************************** */
+Util.checkAccountType = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    async function (err, decodedToken) {
+      if (err) {
+        req.flash("Please log in to access this page.")
+        res.redirect("/account/login")
+      } else {
+          console.log('decodedToken:', decodedToken)
+          console.log('decodedToken.email:', decodedToken.account_email)
+          const accountData = await accountModel.getAccountByEmail(decodedToken.account_email);
+          console.log(accountData);
+          if (accountData.account_type === "Employee" || accountData.account_type === "Admin") {
+            next();
+        } else {
+            req.flash("notice", "You do not have permission to access this page.")
+            res.redirect("/account/login")
+        }
+      }
+    })
+  }
+}
 
 module.exports = Util
