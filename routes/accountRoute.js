@@ -17,4 +17,7 @@ router.get("/", utilities.handleErrors(accountController.buildManagement))
 // Logout
 router.get('/logout', accountController.accountLogout)
 
+//Update Account
+router.get('/update/:account_id', utilities.handleErrors(accountController.buildUpdateAccount))
+
 module.exports = router

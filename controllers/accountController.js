@@ -114,7 +114,11 @@ async function accountLogin(req, res) {
    if (await bcrypt.compare(account_password, accountData.account_password)) {
    delete accountData.account_password
    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
-   res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+   if(process.env.NODE_ENV === "development") {
+    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+   } else {
+    res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+   }
    req.session.isLoggedIn = true
    req.session.firstName = accountData.account_firstname
    req.session.account_email = accountData.account_email
@@ -136,6 +140,8 @@ async function buildManagement(req, res) {
     req.session.firstName = accountData.account_firstname
     res.render("account/management", {
       firstName: req.session.firstName,
+      account_type: accountData.account_type,
+      account_id: accountData.account_id,
       title: "Account Management",
       nav,
       errors: null,
@@ -160,5 +166,24 @@ function accountLogout(req, res) {
   });
 };
 
+/* ****************************************
+* Build Update Account View
+* *************************************** */
+async function buildUpdateAccount(req, res, next) {
+  const account_id = req.params.account_id
+  let nav = await utilities.getNav()
+  const userData = await accountModel.getAccountById(account_id)
+  const title = `${userData.account_firstname} ${userData.account_lastname} - Update Account`
+  res.render("account/update", {
+    title: title,
+    firstName: userData.account_firstname,
+    account_id: userData.account_id,
+    account_firstname: userData.account_firstname,
+    account_lastname: userData.account_lastname,
+    nav,
+    errors: null,
+  })
+}
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout }
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, buildUpdateAccount }

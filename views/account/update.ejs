@@ -1,0 +1,35 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+    
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+  <div>
+    <h1>Account Update</h1>
+    <form action="/account/update/<%= account_id %>" method="POST" id="updateForm">
+        <label for="account_fisrtname">First Name:</label>
+        <input type="test" id="account_firstname" name="account_firstname" value="<% locals.account_firstname %>" required> 
+        <label for="account_lastname">Last Name:</label>
+        <input type="test" id="account_lastname" name="account_lastname" value="<% locals.account_lastname %>" required>
+        <button type="button">Update</button>
+    </form>
+
+    <h1>Change Password</h1>
+    <form action="/account/update/<%= account_id %>" method="POST">
+        <label for="account_password">Password:</label>
+        <input type="password" id="account_password" name="account_password" required>
+        <label for="account_password2">Confirm Password:</label>
+        <input type="password" id="account_password2" name="account_password2" required>
+        <button type="button">Change Password</button>
+    </form>
+  </div>

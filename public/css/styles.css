@@ -421,6 +421,13 @@ input:required:focus:valid {
   width: 150px;
 }
 
+#inv-management {
+  color: black;
+  text-align: left;
+  justify-content: left;
+  font-size: 1.5rem;
+}
+
 /********** 6.4 Add Vehicle ***********/
 .add-inventory-form {
   display: flex;

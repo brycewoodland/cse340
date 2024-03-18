@@ -137,7 +137,7 @@ Util.checkLogin = (req, res, next) => {
     process.env.ACCESS_TOKEN_SECRET,
     function (err, firstName) {
      if (err) {
-      req.flash("Please log in")
+      req.flash("notice", "Please log in")
       res.locals.isLoggedIn = false;
       res.locals.firstName = "";
       return res.redirect("/account/login")
@@ -147,7 +147,7 @@ Util.checkLogin = (req, res, next) => {
      next()
     })
   } else {
-   req.flash("Please log in")
+   req.flash("notice", "Please log in")
    res.redirect("/account/login")
   }
  }
@@ -162,7 +162,7 @@ Util.checkAccountType = (req, res, next) => {
     process.env.ACCESS_TOKEN_SECRET,
     async function (err, decodedToken) {
       if (err) {
-        req.flash("Please log in to access this page.")
+        req.flash("notice", "Please log in to access this page.")
         res.redirect("/account/login")
       } else {
           console.log('decodedToken:', decodedToken)
@@ -172,7 +172,7 @@ Util.checkAccountType = (req, res, next) => {
           if (accountData.account_type === "Employee" || accountData.account_type === "Admin") {
             next();
         } else {
-            req.flash("notice", "You do not have permission to access this page.")
+            req.flash("notice", "Please log in to access this page.")
             res.redirect("/account/login")
         }
       }
