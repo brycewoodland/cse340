@@ -123,6 +123,15 @@ async function accountLogin(req, res) {
    req.session.firstName = accountData.account_firstname
    req.session.account_email = accountData.account_email
    return res.redirect("/account/",)
+   } else {
+    req.flash("notice", "Incorrect password. Please try again.")
+    res.status(400).render("account/login", {
+     isLoggedIn: false,
+     title: "Login",
+     nav,
+     errors: null,
+     account_email,
+    })
    }
   } catch (error) {
    return new Error('Access Forbidden')
@@ -180,10 +189,36 @@ async function buildUpdateAccount(req, res, next) {
     account_id: userData.account_id,
     account_firstname: userData.account_firstname,
     account_lastname: userData.account_lastname,
+    account_email: userData.account_email,
     nav,
     errors: null,
   })
 }
 
+/* ****************************************
+* Update Account
+* *************************************** */
+async function updateAccount(req, res, next) {
+  let nav = await utilities.getNav()
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+  const updateResult = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email)
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, buildUpdateAccount }
+  if (updateResult) {
+    req.flash("notice", "Account updated successfully.")
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Sorry, the account update failed.")
+    res.status(501).render("account/update", {
+      title: `${userData.account_firstname} ${userData.account_lastname} - Update Account`,
+      nav,
+      errors: null,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id
+    })
+  }
+}
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, buildUpdateAccount, updateAccount }

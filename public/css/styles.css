@@ -491,6 +491,38 @@ input:required:focus:valid {
   text-align: left;
 }
 
+#account-update form {
+    margin-bottom: 20px;
+    background-color: rgb(21, 222, 236);
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    justify-content: center;
+    align-items: center;
+}
+
+#account-update label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#account-update input {
+  padding: 8px;
+  border-radius: 5px;
+  width: 300px;
+  margin-bottom: 10px;
+}
+
+#account-update button {
+  padding: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+#account-update li {
+  padding: 0.5rem;
+}
+
 /******* Media Queries *************/
 /******* 4.0 General *************/
 @media (min-width: 820px) {
