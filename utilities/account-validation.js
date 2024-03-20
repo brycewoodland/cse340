@@ -194,22 +194,9 @@ validate.updateRules = () => {
     // valid email is required and cannot already exist in the database
     body("account_email")
       .trim()
-      .isEmail()
+      .isEmail().withMessage("A valid email is required.")
       .normalizeEmail() // refer to validator.js docs
       .withMessage("A valid email is required."),
-
-    // password is required and must be strong password
-    body("account_password")
-      .trim()
-      .notEmpty()
-      .isStrongPassword({
-        minLength: 12,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      })
-      .withMessage("Password does not meet requirements."),
   ]
 }
 
@@ -222,6 +209,7 @@ validate.checkUpdateData = async (req, res, next) => {
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
+    req.flash("notice", "Please correct the errors and try again.")
     res.render("account/update", {
       errors,
       title: "Update Account",

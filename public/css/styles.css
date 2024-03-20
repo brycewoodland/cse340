@@ -68,7 +68,7 @@ CSS Styles for CSE Motors
   align-items: center;
   justify-content: flex-end;
   float: right;
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
 
 #tools a {
@@ -461,7 +461,7 @@ input:required:focus:valid {
 #inventoryDisplay {
   width: 100%;
   border-collapse: collapse;
-  margin: 1rem, 1rem;
+  margin: 1rem 1rem;
 }
 
 #inventoryDisplay th {
@@ -501,12 +501,34 @@ input:required:focus:valid {
     align-items: center;
 }
 
+#password-update form {
+  margin-bottom: 20px;
+  background-color: rgb(21, 222, 236);
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  justify-content: center;
+  align-items: center;
+}
+
 #account-update label {
     display: block;
     margin-bottom: 5px;
 }
 
+#password-update label {
+  display: block;
+  margin-bottom: 5px;
+}
+
 #account-update input {
+  padding: 8px;
+  border-radius: 5px;
+  width: 300px;
+  margin-bottom: 10px;
+}
+
+#password-update input {
   padding: 8px;
   border-radius: 5px;
   width: 300px;
@@ -519,7 +541,17 @@ input:required:focus:valid {
   text-align: left;
 }
 
+#password-update button {
+  padding: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
 #account-update li {
+  padding: 0.5rem;
+}
+
+#password-update li {
   padding: 0.5rem;
 }
 

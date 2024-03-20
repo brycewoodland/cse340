@@ -16,28 +16,28 @@
 
 <div id="account-update">
     <h2>Account Update</h2>
-    <form id="account-update-form" action="/account/update/<%= account_id %>" method="POST">
+    <form id="account-update-form" action="/account/update-details" method="POST">
         <label for="account_firstname">First Name:</label>
         <input type="text" id="account_firstname" name="account_firstname" value="<%= locals.account_firstname %>" required> 
         <label for="account_lastname">Last Name:</label>
         <input type="text" id="account_lastname" name="account_lastname" value="<%= locals.account_lastname %>" required>
         <label for="account_email">Email:</label>
         <input type="email" id="account_email" name="account_email" value="<%= locals.account_email %>" required>
-        <button type="button">Update</button>
+        <button type="submit">Update</button>
         <input type="hidden" name="account_id">
     </form>
-<div>
-<div id="password-change">
+</div>
+<div id="password-update">
     <h2>Change Password</h2>
     <p>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</p>
     <ul>
         <li>Note your original password will be changed.</li>
     </ul>
-    <form id="password-change-form" action="/account/update/<%= account_id %>" method="POST">
+    <form id="password-change-form" action="/account/update-password" method="POST">
         <label for="account_password">New Password:</label>
-        <input type="password" id="account_password" name="account_password" required>
+        <input id="account_password" type="password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
         <p><i>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</i></p>
-        <button type="button">Change Password</button>
+        <button type="submit">Change Password</button>
         <input type="hidden" name="account_id">
     </form>
 </div>
