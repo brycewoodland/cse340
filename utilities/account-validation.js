@@ -195,7 +195,7 @@ validate.updateRules = () => {
     body("account_email")
       .trim()
       .isEmail().withMessage("A valid email is required.")
-      .normalizeEmail() // refer to validator.js docs
+      .normalizeEmail()
       .withMessage("A valid email is required."),
   ]
 }

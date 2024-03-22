@@ -444,7 +444,7 @@ input:required:focus:valid {
   border-radius: 8px;
 }
 
-.add-inventory-form input, textarea, select {
+.add-inventory-form input, select {
   display: block;
   margin: 5px;
   padding: 5px;
@@ -492,13 +492,13 @@ input:required:focus:valid {
 }
 
 #account-update form {
-    margin-bottom: 20px;
-    background-color: rgb(21, 222, 236);
-    padding: 20px;
-    border-radius: 5px;
-    width: 400px;
-    justify-content: center;
-    align-items: center;
+  margin-bottom: 20px;
+  background-color: rgb(21, 222, 236);
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  justify-content: center;
+  align-items: center;
 }
 
 #password-update form {

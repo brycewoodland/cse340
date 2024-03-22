@@ -143,8 +143,9 @@ async function accountLogin(req, res) {
 * *************************************** */
 async function buildManagement(req, res) {
   let nav = await utilities.getNav()
+  const account_email = req.session.account_email
   if (req.session.isLoggedIn) {
-    const accountData = await accountModel.getAccountByEmail(req.session.account_email)
+    const accountData = await accountModel.getAccountByEmail(account_email)
     console.log(accountData)
     req.session.firstName = accountData.account_firstname
     res.render("account/management", {
@@ -183,7 +184,7 @@ async function buildUpdateAccount(req, res, next) {
   let nav = await utilities.getNav()
   const userData = await accountModel.getAccountById(account_id)
   const title = `${userData.account_firstname} ${userData.account_lastname} - Update Account`
-  res.render("account/update", {
+  res.render("./account/update", {
     title: title,
     firstName: userData.account_firstname,
     account_id: userData.account_id,
@@ -200,25 +201,27 @@ async function buildUpdateAccount(req, res, next) {
 * *************************************** */
 async function updateAccount(req, res, next) {
   let nav = await utilities.getNav()
-  const { account_id, account_firstname, account_lastname, account_email } = req.body
+  const { account_id, account_firstname, account_lastname, account_email, account_type } = req.body
   const updateResult = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email)
 
-  if (updateResult) {
+  if (updateResult) { 
     req.flash("notice", "Account updated successfully.")
     res.redirect("/account/")
   } else {
     req.flash("notice", "Sorry, the account update failed.")
-    res.status(501).render("account/update", {
-      title: `${userData.account_firstname} ${userData.account_lastname} - Update Account`,
+    console.log(account_id)
+    res.status(501).render("account/management", {
+      title: "Account Management",
       nav,
+      firstName: account_firstname,
       errors: null,
       account_firstname,
       account_lastname,
       account_email,
-      account_id
+      account_id,
+      account_type,
     })
   }
 }
-
 
 module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, buildUpdateAccount, updateAccount }
