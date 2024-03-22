@@ -444,7 +444,7 @@ input:required:focus:valid {
   border-radius: 8px;
 }
 
-.add-inventory-form input, select {
+.add-inventory-form input, textarea, select {
   display: block;
   margin: 5px;
   padding: 5px;

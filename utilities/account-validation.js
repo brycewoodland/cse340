@@ -130,7 +130,7 @@ validate.checkLoginData = async (req, res, next) => {
 /*  **********************************
 *  Update Data Validation Rules
 * ********************************* */
-validate.updateRules = () => {
+validate.updateDetailRules = () => {
   return [
     // firstname is required and must be string
     body("account_firstname")
@@ -204,7 +204,7 @@ validate.updateRules = () => {
 * Check data and return errors or continue to update
 * ***************************** */
 validate.checkUpdateData = async (req, res, next) => { 
-  const { account_firstname, account_lastname, account_email } = req.body
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -214,6 +214,7 @@ validate.checkUpdateData = async (req, res, next) => {
       errors,
       title: "Update Account",
       nav,
+      account_id,
       account_firstname,
       account_lastname,
       account_email,

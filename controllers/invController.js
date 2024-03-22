@@ -13,7 +13,6 @@ invCont.buildByClassificationId = async function (req, res, next) {
   let nav = await utilities.getNav()
   const className = data[0].classification_name
   res.render("./inventory/classification", {
-    firstName: req.session.firstName,
     title: className + " Vehicles",
     nav,
     grid,
@@ -30,7 +29,6 @@ invCont.buildVehicleById = async function (req, res, next) {
   let nav = await utilities.getNav()
   const title = data.inv_make + " " + data.inv_model
   res.render("./inventory/vehicle", {
-    firstName: req.session.firstName,
     title: title,
     nav,
     grid,
@@ -44,7 +42,6 @@ invCont.buildManage = async function (req, res, next) {
   let nav = await utilities.getNav();
   const classificationSelect = await utilities.buildClassificationList()
   res.render("./inventory/management", {
-    firstName: req.session.firstName,
     title: "Vehicle Management",
     nav,
     classificationSelect,
@@ -57,7 +54,6 @@ invCont.buildManage = async function (req, res, next) {
 invCont.buildClassification = async function (req, res, next) {
   let nav = await utilities.getNav();
   res.render("./inventory/add-classification", {
-    firstName: req.session.firstName,
     title: "Add Classification",
     nav,
     errors: null,
@@ -92,7 +88,6 @@ invCont.buildInventory = async function (req, res, next) {
   let nav = await utilities.getNav();
   const list = await utilities.buildClassificationList()
   res.render("./inventory/add-inventory", {
-    firstName: req.session.firstName,
     title: "Add Inventory",
     nav,
     list,
@@ -166,7 +161,6 @@ invCont.buildEditInventory = async function (req, res, next) {
   const list = await utilities.buildClassificationList(itemData.classification_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
   res.render("./inventory/edit-inventory", {
-    firstName: req.session.firstName,
     title: "Edit " + itemName,
     nav,
     list: list,
@@ -255,7 +249,6 @@ invCont.deleteInventory = async function (req, res, next) {
   const itemData = await invModel.getVehicleDataById(inv_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
   res.render("./inventory/delete-confirm", {
-    firstName: req.session.firstName,
     title: "Delete " + itemName,
     nav,
     errors: null,

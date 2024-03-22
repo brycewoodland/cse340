@@ -21,7 +21,9 @@ async function buildLogin(req, res, next) {
   }
   res.render("account/login", {
     isLoggedIn: isLoggedIn,
-    firstName: req.session.firstName,
+    accountData: {
+      account_firstname: req.session.account_firstname,
+    },
     title: "Login",
     nav,
     errors: null,
@@ -102,7 +104,6 @@ async function accountLogin(req, res) {
   if (!accountData) {
    req.flash("notice", "Please check your credentials and try again.")
    res.status(400).render("account/login", {
-    isLoggedIn: false,
     title: "Login",
     nav,
     errors: null,
@@ -112,21 +113,17 @@ async function accountLogin(req, res) {
   }
   try {
    if (await bcrypt.compare(account_password, accountData.account_password)) {
-   delete accountData.account_password
-   const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+      delete accountData.account_password
+      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
    if(process.env.NODE_ENV === "development") {
     res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
    } else {
     res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
    }
-   req.session.isLoggedIn = true
-   req.session.firstName = accountData.account_firstname
-   req.session.account_email = accountData.account_email
    return res.redirect("/account/",)
    } else {
     req.flash("notice", "Incorrect password. Please try again.")
     res.status(400).render("account/login", {
-     isLoggedIn: false,
      title: "Login",
      nav,
      errors: null,
@@ -143,13 +140,14 @@ async function accountLogin(req, res) {
 * *************************************** */
 async function buildManagement(req, res) {
   let nav = await utilities.getNav()
-  const account_email = req.session.account_email
-  if (req.session.isLoggedIn) {
+  if (req.cookies.jwt) {
+    const payload = jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET)
+    const account_email = payload.account_email
+
     const accountData = await accountModel.getAccountByEmail(account_email)
     console.log(accountData)
-    req.session.firstName = accountData.account_firstname
     res.render("account/management", {
-      firstName: req.session.firstName,
+      accountData,
       account_type: accountData.account_type,
       account_id: accountData.account_id,
       title: "Account Management",
@@ -183,14 +181,15 @@ async function buildUpdateAccount(req, res, next) {
   const account_id = req.params.account_id
   let nav = await utilities.getNav()
   const userData = await accountModel.getAccountById(account_id)
+  console.log(userData)
   const title = `${userData.account_firstname} ${userData.account_lastname} - Update Account`
   res.render("./account/update", {
     title: title,
-    firstName: userData.account_firstname,
     account_id: userData.account_id,
     account_firstname: userData.account_firstname,
     account_lastname: userData.account_lastname,
     account_email: userData.account_email,
+    account_type: userData.account_type,
     nav,
     errors: null,
   })
@@ -202,24 +201,20 @@ async function buildUpdateAccount(req, res, next) {
 async function updateAccount(req, res, next) {
   let nav = await utilities.getNav()
   const { account_id, account_firstname, account_lastname, account_email, account_type } = req.body
-  const updateResult = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email)
+  console.log(req.body)
+  const updateResult = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email, account_type)
 
   if (updateResult) { 
+    req.session.account_firstname = account_firstname;
     req.flash("notice", "Account updated successfully.")
     res.redirect("/account/")
   } else {
     req.flash("notice", "Sorry, the account update failed.")
-    console.log(account_id)
     res.status(501).render("account/management", {
       title: "Account Management",
       nav,
-      firstName: account_firstname,
       errors: null,
-      account_firstname,
-      account_lastname,
-      account_email,
-      account_id,
-      account_type,
+      account_type: account_type,
     })
   }
 }

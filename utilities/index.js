@@ -112,13 +112,13 @@ Util.checkJWTToken = (req, res, next) => {
    jwt.verify(
     req.cookies.jwt,
     process.env.ACCESS_TOKEN_SECRET,
-    function (err, firstName) {
+    function (err, accountData) {
      if (err) {
       req.flash("Please log in")
       res.clearCookie("jwt")
       return res.redirect("/account/login")
      }
-     res.locals.firstName = firstName
+     res.locals.accountData = accountData
      res.locals.isLoggedIn = 1
      next()
     })
@@ -132,25 +132,53 @@ Util.checkJWTToken = (req, res, next) => {
 **************************************** */
 Util.checkLogin = (req, res, next) => {
   if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      async function (err, decoded) {
+        if (err) {
+          req.flash("notice", "Please log in")
+          res.locals.isLoggedIn = 0;
+          res.locals.accountData = { account_firstname: "" };
+          return res.redirect("/account/login")
+        }
+        // Fetch account data using the account email from the decoded JWT
+        const accountData = await accountModel.getAccountByEmail(decoded.account_email)
+        // Set res.locals values
+        res.locals.isLoggedIn = 1;
+        res.locals.accountData = accountData;
+        next()
+      })
+  } else {
+    req.flash("notice", "Please log in")
+    res.locals.isLoggedIn = 0;
+    res.locals.accountData = { account_firstname: "" };
+    res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
+* Middleware to update name across all views
+**************************************** */
+Util.updateName = (req, res, next) => {
+  if (req.cookies.jwt) {
    jwt.verify(
     req.cookies.jwt,
     process.env.ACCESS_TOKEN_SECRET,
-    function (err, firstName) {
+    async function (err, decodedToken) {
      if (err) {
-      req.flash("notice", "Please log in")
-      res.locals.isLoggedIn = false;
-      res.locals.firstName = "";
-      return res.redirect("/account/login")
+      req.flash("notice", "Please log in to access this page.")
+      res.redirect("/account/login")
+     } else {
+      const accountData = await accountModel.getAccountByEmail(decodedToken.account_email)
+      res.locals.account_firstname = accountData.account_firstname
+      next()
      }
-     res.locals.firstName = firstName
-     res.locals.isLoggedIn = true;
-     next()
     })
   } else {
-   req.flash("notice", "Please log in")
-   res.redirect("/account/login")
+   next()
   }
- }
+}
 
 /* ****************************************
 * Middleware to check admin or employee
@@ -177,6 +205,34 @@ Util.checkAccountType = (req, res, next) => {
         }
       }
     })
+  }
+}
+
+/* ****************************************
+* Middleware to update changes
+**************************************** */
+Util.setUserInformation = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      async function (err, decoded) {
+        if (err) {
+          res.locals.isLoggedIn = 0;
+          res.locals.accountData = { account_firstname: "" };
+        } else {
+          // Fetch account data using the account email from the decoded JWT
+          const accountData = await accountModel.getAccountByEmail(decoded.account_email)
+          // Set res.locals values
+          res.locals.isLoggedIn = 1;
+          res.locals.accountData = accountData;
+        }
+        next()
+      })
+  } else {
+    res.locals.isLoggedIn = 0;
+    res.locals.accountData = { account_firstname: "" };
+    next()
   }
 }
 

@@ -12,7 +12,7 @@ router.post("/register", regValidate.registrationRules(), regValidate.checkRegDa
 router.post("/login", regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin))
 
 // Default route
-router.get("/", utilities.handleErrors(accountController.buildManagement))
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
 
 // Logout
 router.get('/logout', accountController.accountLogout)
@@ -21,7 +21,7 @@ router.get('/logout', accountController.accountLogout)
 router.get('/update/:account_id', utilities.handleErrors(accountController.buildUpdateAccount))
 
 // Update Account
-router.post('/update/', regValidate.updateRules(), regValidate.checkUpdateData, utilities.handleErrors(accountController.updateAccount))
+router.post('/update/', utilities.checkLogin, regValidate.updateDetailRules(), regValidate.checkUpdateData, utilities.handleErrors(accountController.updateAccount))
 
 // Change Password
 router.post('/update-password/', regValidate.registrationRules(), utilities.handleErrors(accountController.updateAccount))

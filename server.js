@@ -7,6 +7,7 @@
  *************************/
 const session = require("express-session")
 const pool = require("./database/")
+const jwt = require("jsonwebtoken")
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
@@ -48,6 +49,9 @@ app.use(function(req, res, next){
 // Cookie Parser
 app.use(cookieParser())
 app.use(utilities.checkJWTToken)
+
+// Set user information
+app.use(utilities.setUserInformation)
 
 /* ***********************
  * View Engine and Templates

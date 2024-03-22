@@ -24,6 +24,7 @@
         <label for="account_email">Email:</label>
         <input type="email" id="account_email" name="account_email" value="<%= locals.account_email %>" required>
         <button type="submit">Update</button>
+        <input type="hidden" name="account_type" value="<%= locals.account_type %>">
         <input type="hidden" name="account_id" value="<%= locals.account_id %>">
     </form>
 </div>
