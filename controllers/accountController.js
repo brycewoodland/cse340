@@ -219,4 +219,28 @@ async function updateAccount(req, res, next) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, buildUpdateAccount, updateAccount }
+/* ****************************************
+* Password Change
+* *************************************** */
+async function changePassword(req, res, next) {
+  let nav = await utilities.getNav()
+  const { account_id, account_password } = req.body
+  console.log(req.body)
+  const hashedPassword = await bcrypt.hashSync(account_password, 10)
+  const updateResult = await accountModel.updatePassword(account_id, hashedPassword)
+
+  if (updateResult) { 
+    req.flash("notice", "Password changed successfully.")
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Sorry, the password change failed.")
+    res.status(501).render("account/management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+      account_type: account_type,
+    })
+  }
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, buildUpdateAccount, updateAccount, changePassword }

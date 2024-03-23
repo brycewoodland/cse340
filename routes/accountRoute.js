@@ -24,6 +24,6 @@ router.get('/update/:account_id', utilities.handleErrors(accountController.build
 router.post('/update/', utilities.checkLogin, regValidate.updateDetailRules(), regValidate.checkUpdateData, utilities.handleErrors(accountController.updateAccount))
 
 // Change Password
-router.post('/update-password/', regValidate.registrationRules(), utilities.handleErrors(accountController.updateAccount))
+router.post('/update-password/', regValidate.registrationRules(), utilities.handleErrors(accountController.changePassword))
 
 module.exports = router
