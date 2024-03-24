@@ -158,29 +158,6 @@ Util.checkLogin = (req, res, next) => {
 }
 
 /* ****************************************
-* Middleware to update name across all views
-**************************************** */
-Util.updateName = (req, res, next) => {
-  if (req.cookies.jwt) {
-   jwt.verify(
-    req.cookies.jwt,
-    process.env.ACCESS_TOKEN_SECRET,
-    async function (err, decodedToken) {
-     if (err) {
-      req.flash("notice", "Please log in to access this page.")
-      res.redirect("/account/login")
-     } else {
-      const accountData = await accountModel.getAccountByEmail(decodedToken.account_email)
-      res.locals.account_firstname = accountData.account_firstname
-      next()
-     }
-    })
-  } else {
-   next()
-  }
-}
-
-/* ****************************************
 * Middleware to check admin or employee
 **************************************** */
 Util.checkAccountType = (req, res, next) => {

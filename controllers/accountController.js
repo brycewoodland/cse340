@@ -22,7 +22,7 @@ async function buildLogin(req, res, next) {
   res.render("account/login", {
     isLoggedIn: isLoggedIn,
     accountData: {
-      account_firstname: req.session.account_firstname,
+      account_firstname: req.body.account_firstname,
     },
     title: "Login",
     nav,
@@ -162,16 +162,11 @@ async function buildManagement(req, res) {
 /* ****************************************
 * Logout
 * *************************************** */
-function accountLogout(req, res) {
+async function accountLogout(req, res) {
   console.log("Logout function called");
-  req.session.destroy(err => {
-    if(err) {
-      console.log("Error : Failed to destroy the session during logout.", err);
-    }
-    res.clearCookie('jwt');
+    res.clearCookie('jwt', { httpOnly: true});
     console.log("Redirecting to home page");
     res.redirect('/');
-  });
 };
 
 /* ****************************************
@@ -205,7 +200,7 @@ async function updateAccount(req, res, next) {
   const updateResult = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email, account_type)
 
   if (updateResult) { 
-    req.session.account_firstname = account_firstname;
+    req.body.account_firstname = account_firstname;
     req.flash("notice", "Account updated successfully.")
     res.redirect("/account/")
   } else {
