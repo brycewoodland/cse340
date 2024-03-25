@@ -185,32 +185,4 @@ Util.checkAccountType = (req, res, next) => {
   }
 }
 
-/* ****************************************
-* Middleware to update changes
-**************************************** */
-Util.setUserInformation = (req, res, next) => {
-  if (req.cookies.jwt) {
-    jwt.verify(
-      req.cookies.jwt,
-      process.env.ACCESS_TOKEN_SECRET,
-      async function (err, decoded) {
-        if (err) {
-          res.locals.isLoggedIn = 0;
-          res.locals.accountData = { account_firstname: "" };
-        } else {
-          // Fetch account data using the account email from the decoded JWT
-          const accountData = await accountModel.getAccountByEmail(decoded.account_email)
-          // Set res.locals values
-          res.locals.isLoggedIn = 1;
-          res.locals.accountData = accountData;
-        }
-        next()
-      })
-  } else {
-    res.locals.isLoggedIn = 0;
-    res.locals.accountData = { account_firstname: "" };
-    next()
-  }
-}
-
 module.exports = Util

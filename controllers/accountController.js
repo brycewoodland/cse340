@@ -122,7 +122,7 @@ async function accountLogin(req, res) {
    }
    return res.redirect("/account/",)
    } else {
-    req.flash("notice", "Incorrect password. Please try again.")
+    req.flash("notice", "Incorrect password or email. Please try again.")
     res.status(400).render("account/login", {
      title: "Login",
      nav,
@@ -202,6 +202,9 @@ async function updateAccount(req, res, next) {
   if (updateResult) { 
     req.body.account_firstname = account_firstname;
     req.flash("notice", "Account updated successfully.")
+    const payload = { account_id, account_firstname, account_lastname, account_email, account_type }
+    const newToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+    res.cookie("jwt", newToken, { httpOnly: true, maxAge: 3600 * 1000 })
     res.redirect("/account/")
   } else {
     req.flash("notice", "Sorry, the account update failed.")

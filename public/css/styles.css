@@ -83,7 +83,8 @@ CSS Styles for CSE Motors
 
 #Welcome-message {
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
 } 
 
 #myAccount {

@@ -50,9 +50,6 @@ app.use(function(req, res, next){
 app.use(cookieParser())
 app.use(utilities.checkJWTToken)
 
-// Set user information
-app.use(utilities.setUserInformation)
-
 /* ***********************
  * View Engine and Templates
  *************************/
