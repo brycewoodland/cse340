@@ -8,7 +8,7 @@ const invCont = {}
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
-  const data = await invModel.getInventoryByClassificationId(classification_id)
+  const data = await invModel.approveVehicle(classification_id)
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
   const className = data[0].classification_name
@@ -24,7 +24,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
  * **************************************** */
 invCont.buildVehicleById = async function (req, res, next) {
   const inv_id = req.params.invId
-  const data = await invModel.getVehicleDataById(inv_id)
+  const data = await invModel.approveVehicle(inv_id)
   const grid = await utilities.buildVehicleView(data)
   let nav = await utilities.getNav()
   const title = data.inv_make + " " + data.inv_model
@@ -299,5 +299,11 @@ invCont.deleteInventoryPost = async function (req, res, next) {
     })
   }
 }
+
+/* *************************************************
+ * Prevent newly added classification and 
+ * inventory items from being available immediately
+ * ************************************************* */
+
 
 module.exports = invCont
