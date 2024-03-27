@@ -315,50 +315,28 @@ async function rejectClassification(req, res, next) {
 }
 
 /* ****************************************
-* Build Inventory Approval View
-* *************************************** */
-async function buildInventoryApproval(req, res, next) {
-  let nav = await utilities.getNav()
-  let inv_id = req.params.inv_id
-  let inventory = await invModel.getInventoryDataById(req.params.inv_id)
-  let vehicleView = await utilities.buildVehicleView(inventory)
-  res.render("account/approve-inventory", {
-    title: "Inventory Approval",
-    nav,
-    vehicleView,
-    inv_id,
-    errors: null,
-  })
-}
-
-/* ****************************************
 * Approve Inventory
 * *************************************** */
 async function approveInventory(req, res, next) {
   let nav = await utilities.getNav()
   const inv_id  = req.params.inv_id
-  const inventory = await invModel.getUnapprovedInventory()
-  let grid, invGrid = await utilities.buildUnapprovedInventory(inventory.rows)
   const isApproved = await invModel.checkIfApproved(inv_id)
   
   if (!isApproved) {
     req.flash("notice", "Classification must be approved before inventory can be approved.")
     res.redirect("/account/unapproved-items")
   } else {
-    await invModel.approveVehicle(inv_id)
-    req.flash("notice", "Inventory approved.")
-    res.redirect("/account/unapproved-items")
-  } 
-  
-  const result = await invModel.approveInventory(inv_id)
-  if (!result) {
-    req.flash("notice", "Sorry, the inventory approval failed.")
-    res.render("account/unapproved-items", {
-      title: "Unapproved Items",
-      nav,
-      grid,
-      invGrid
-    })
+      const result = await invModel.approveVehicle(inv_id)
+      if (!result) {
+        req.flash("notice", "Sorry, the inventory approval failed.")
+        res.render("account/unapproved-items", {
+          title: "Unapproved Items",
+          nav
+        })
+    } else {
+      req.flash("notice", "Inventory approved.")
+      res.redirect("/account/unapproved-items")
+    }
   }
 }
 
@@ -399,7 +377,6 @@ module.exports = {
   buildUnapprovedItems,
   buildApproveClassification,
   approveClassification,
-  buildInventoryApproval,
   approveInventory,
   rejectClassification,
   rejectInventory

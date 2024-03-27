@@ -127,7 +127,7 @@ async function deleteInventory(inv_id) {
 /* ***************************
  *  Check if inv item is approved
  * ************************** */
-async function approveVehicle(inv_id, account_id) {
+async function approveVehicle(inv_id) {
   try {
     const data = await pool.query(
       `UPDATE public.inventory SET inv_approved = true WHERE inv_id = $1`,
@@ -165,7 +165,16 @@ async function getUnapprovedClassifications() {
  *  Fetch unapproved inventory
  * ************************** */
 async function getUnapprovedInventory() {
-  return await pool.query("SELECT * FROM public.inventory WHERE inv_approved = false")
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.inventory AS i
+      JOIN public.classification AS c ON i.classification_id = c.classification_id
+      WHERE i.inv_approved = false`
+    )
+    return data.rows
+  } catch (error) {
+    console.error("getUnapprovedInventory error " + error)
+  }
 }
 
 /* ***************************
@@ -265,6 +274,19 @@ async function checkIfApproved(inv_id) {
   }
 }
 
+async function getInventoryItems() {
+  try {
+    const data = await pool.query(
+      `SELECT i.*, c.classification_name
+      FROM public.inventory AS i
+      JOIN public.classification AS c ON i.classification_id = c.classification_id`
+    )
+    return data.rows;
+  } catch (error) {
+    console.error("getInventoryItems error " + error)
+  }
+}
+
 
 module.exports = { 
   getClassifications, 
@@ -282,5 +304,6 @@ module.exports = {
   getByClassificationId,
   rejectClassification,
   rejectInventory,
-  checkIfApproved
+  checkIfApproved,
+  getInventoryItems
 };
