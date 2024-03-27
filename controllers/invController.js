@@ -300,10 +300,4 @@ invCont.deleteInventoryPost = async function (req, res, next) {
   }
 }
 
-/* *************************************************
- * Prevent newly added classification and 
- * inventory items from being available immediately
- * ************************************************* */
-
-
 module.exports = invCont

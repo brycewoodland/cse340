@@ -11,20 +11,30 @@ Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
   let list = '<ul>'
   list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    if (row.is_approved) {
-    list += "<li>"
-      list +=
-        '<a href="/inv/type/' +
-        row.classification_id +
-        '" title="See our inventory of ' +
-        row.classification_name +
-        ' vehicles">' +
-        row.classification_name +
-        "</a>"
-      list += "</li>"
+  
+  for (let row of data.rows) {
+    if (row.classification_approved) {
+      const inventoryItems = await invModel.getInventoryByClassificationId(row.classification_id)
+      // Check if the classification has any approved inventory items
+      try {
+        if (inventoryItems.some(item => item.inv_approved)) {
+          list += "<li>"
+          list +=
+            '<a href="/inv/type/' +
+            row.classification_id +
+            '" title="See our inventory of ' +
+            row.classification_name +
+            ' vehicles">' +
+            row.classification_name +
+            "</a>"
+          list += "</li>"
+        }
+      } catch (error) {
+        console.error(`Failed to process inventory items for classification ${row.classification_id}: ${error.message}`)
+      }
     }
-  })
+  }
+  
   list += "</ul>"
   return list
 }
@@ -85,14 +95,15 @@ Util.buildVehicleView = async function (data) {
 * Build unapproved items
 * ********************* */
 Util.buildUnapprovedClassifications = async function (req, res, next) {
-  let nav = await Util.getNav()
   let classifications = await invModel.getUnapprovedClassifications()
   let grid = '<h2 id="classification">Classifications</h2>'
   grid += '<div class="grid=container">'
   for (let item of classifications.rows) {
     grid += '<div class="grid-item">'
     grid += '<h2>' + item.classification_name + '</h2>'
-    grid += '<a href="/account/approve-classification/' + item.classification_id + '">Approve</a>'
+    grid += '<form method="POST" action="/account/approve-classification/' + item.classification_id + '">'
+    grid += '<input type="submit" value="Approve" class="link-button">'
+    grid += '</form>'
     grid += '                  '
     grid += '<a href="/account/delete-classification/' + item.classification_id + '"> Reject</a>'
     grid += '</div>'
@@ -105,16 +116,15 @@ Util.buildUnapprovedClassifications = async function (req, res, next) {
 * Build the unapproved inventory grid
 ***************************************** */
 Util.buildUnapprovedInventory = async function (req, res, next) {
-  let nav = await Util.getNav()
   let inventory = await invModel.getUnapprovedInventory()
   let invGrid = '<h2 id="inventory">Inventory</h2>'
   invGrid += '<div class="grid-container">'
   for (let item of inventory.rows) {
     invGrid += '<div class="grid-item">'
     invGrid += '<h2>' + item.inv_make + ' ' + item.inv_model + '</h2>'
-    invGrid += '<a href="/account/approve-vehicle/' + item.inv_id + '">Approve</a>'
+    invGrid += '<a href="/account/approve-inventory/' + item.inv_id + '">Approve</a>'
     invGrid += '                  '
-    invGrid += '<a href="/account/delete-vehicle/' + item.inv_id + '"> Reject</a>'
+    invGrid += '<a href="/account/delete-inventory/' + item.inv_id + '"> Reject</a>'
     invGrid += '</div>'
   }
   invGrid += '</div>'

@@ -256,4 +256,50 @@ async function buildUnapprovedItems(req, res, next) {
   })
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, buildUpdateAccount, updateAccount, changePassword, buildUnapprovedItems }
+async function buildApproveClassification(req, res, next) {
+  let nav = await utilities.getNav()
+  const classification_id = req.params.classification_id
+  const result = await invModel.getUnapprovedClassifications(classification_id)
+  if (result) {
+    res.render("account/approve-classification", {
+      title: "Approve Classification",
+      nav,
+      result
+    })
+  } else {
+    req.flash("notice", "Sorry, the classification approval failed.")
+    res.redirect("/account/unapproved-items")
+  }
+}
+
+async function approveClassification(req, res, next) {
+  let nav = await utilities.getNav()
+  const classification_id = req.params.classification_id
+  const result = await invModel.approveClassification(classification_id)
+  if (result) {
+    req.flash("notice", "Classification approved.")
+    res.redirect("/account/unapproved-items")
+  } else {
+    req.flash("notice", "Sorry, the classification approval failed.")
+    res.render("account/unapproved-items", {
+      title: "Unapproved Items",
+      nav,
+      grid,
+    })
+  }
+}
+
+module.exports = { 
+  buildLogin, 
+  buildRegister, 
+  registerAccount, 
+  accountLogin, 
+  buildManagement, 
+  accountLogout, 
+  buildUpdateAccount, 
+  updateAccount, 
+  changePassword, 
+  buildUnapprovedItems,
+  buildApproveClassification,
+  approveClassification
+ }

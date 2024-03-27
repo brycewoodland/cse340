@@ -4,7 +4,7 @@ const pool = require("../database/")
  *  Get all classification data
  * ************************** */
 async function getClassifications(){
-  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+  return await pool.query("SELECT * FROM public.classification WHERE classification_approved = true ORDER BY classification_name")
 }
 
 /* ***************************
@@ -167,4 +167,32 @@ async function getUnapprovedInventory() {
   return await pool.query("SELECT * FROM public.inventory WHERE inv_approved = false")
 }
 
-module.exports = { getClassifications, getInventoryByClassificationId, getVehicleDataById, addClassification, addVehicle, updateInventory, deleteInventory, approveVehicle, approveClassification, getUnapprovedClassifications, getUnapprovedInventory };
+/* ***************************
+*  Approve classification
+* ************************** */
+async function approveClassification(classification_id) {
+  try {
+    const data = await pool.query(
+      `UPDATE public.classification SET classification_approved = true WHERE classification_id = $1`,
+      [classification_id]
+    )
+    return data
+  } catch (error) {
+    console.error("approveClassification error " + error)
+  }
+}
+
+module.exports = { 
+  getClassifications, 
+  getInventoryByClassificationId, 
+  getVehicleDataById, 
+  addClassification, 
+  addVehicle, 
+  updateInventory, 
+  deleteInventory, 
+  approveVehicle, 
+  approveClassification, 
+  getUnapprovedClassifications, 
+  getUnapprovedInventory,
+  approveClassification
+};

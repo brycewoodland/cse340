@@ -29,4 +29,7 @@ router.post('/update-password/', regValidate.registrationRules(), utilities.hand
 // Unapproved Items
 router.get('/unapproved-items', utilities.checkLogin, utilities.handleErrors(accountController.buildUnapprovedItems))
 
+// Approve Classification 
+router.post('/approve-classification/:classification_id', utilities.checkLogin, utilities.handleErrors(accountController.approveClassification))
+
 module.exports = router
