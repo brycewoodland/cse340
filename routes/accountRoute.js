@@ -32,6 +32,9 @@ router.get('/unapproved-items', utilities.checkLogin, utilities.handleErrors(acc
 // Approve Classification 
 router.post('/approve-classification/:classification_id', utilities.checkLogin, utilities.handleErrors(accountController.approveClassification))
 
+// Reject Classification
+router.post('/reject-classification/:classification_id', utilities.checkLogin, utilities.handleErrors(accountController.rejectClassification))
+
 // Deliver Inventory Approval View
 router.get('/approve-inventory/:inv_id', utilities.checkLogin, utilities.handleErrors(accountController.buildInventoryApproval))
 

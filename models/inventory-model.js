@@ -184,6 +184,21 @@ async function approveClassification(classification_id) {
 }
 
 /* ***************************
+*  Reject classification
+* ************************** */
+async function rejectClassification(classification_id) {
+  try {
+    const data = await pool.query(
+      `DELETE FROM public.classification WHERE classification_id = $1`,
+      [classification_id]
+    ) 
+    return data
+  } catch (error) {
+    console.error("rejectClassification error " + error)
+  }
+}
+
+/* ***************************
 *  Approve inventory
 * ************************** */
 async function getInventoryDataById(inv_id) {
@@ -229,5 +244,6 @@ module.exports = {
   getUnapprovedClassifications, 
   getUnapprovedInventory,
   getInventoryDataById,
-  getByClassificationId
+  getByClassificationId,
+  rejectClassification
 };

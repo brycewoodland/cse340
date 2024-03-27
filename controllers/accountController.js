@@ -295,6 +295,26 @@ async function approveClassification(req, res, next) {
 }
 
 /* ****************************************
+* Reject Classification
+* *************************************** */
+async function rejectClassification(req, res, next) {
+  let nav = await utilities.getNav()
+  const classification_id = req.params.classification_id
+  const result = await invModel.rejectClassification(classification_id)
+  if (result) {
+    req.flash("notice", "Classification rejected.")
+    res.redirect("/account/unapproved-items")
+  } else {
+    req.flash("notice", "Sorry, the classification rejection failed.")
+    res.render("account/unapproved-items", {
+      title: "Unapproved Items",
+      nav,
+      grid,
+    })
+  }
+}
+
+/* ****************************************
 * Build Inventory Approval View
 * *************************************** */
 async function buildInventoryApproval(req, res, next) {
@@ -348,5 +368,6 @@ module.exports = {
   buildApproveClassification,
   approveClassification,
   buildInventoryApproval,
-  approveInventory
+  approveInventory,
+  rejectClassification
  }

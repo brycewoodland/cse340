@@ -105,7 +105,9 @@ Util.buildUnapprovedClassifications = async function (req, res, next) {
     grid += '<input type="submit" value="Approve" class="link-button">'
     grid += '</form>'
     grid += '                  '
-    grid += '<a href="/account/delete-classification/' + item.classification_id + '"> Reject</a>'
+    grid += '<form method="POST" action="/account/reject-classification/' + item.classification_id + '">'
+    grid += '<input type="submit" value="Reject" class="link-button">'
+    grid += '</form>'
     grid += '</div>'
   }
   grid += '</div>'
