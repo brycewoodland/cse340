@@ -1,5 +1,6 @@
 const utilities = require("../utilities")
 const accountModel = require("../models/account-model")
+const invModel = require("../models/inventory-model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -241,4 +242,18 @@ async function changePassword(req, res, next) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, buildUpdateAccount, updateAccount, changePassword }
+async function buildUnapprovedItems(req, res, next) {
+  let nav = await utilities.getNav()
+  let classifications = await invModel.getUnapprovedClassifications()
+  let inventory = await invModel.getUnapprovedInventory()
+  const grid = await utilities.buildUnapprovedClassifications(classifications.rows)
+  let invGrid = await utilities.buildUnapprovedInventory(inventory.rows)
+  res.render("account/unapproved-items", {
+    title: "Unapproved Items",
+    nav,
+    grid,
+    invGrid
+  })
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, accountLogout, buildUpdateAccount, updateAccount, changePassword, buildUnapprovedItems }

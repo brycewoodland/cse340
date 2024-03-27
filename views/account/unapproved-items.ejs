@@ -1,0 +1,17 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+    
+    <%- messages() %>
+    
+<div class="flex-container">
+    <div>
+        <%- grid %>
+    </div>
+    <div class="flex-item">
+        <%- invGrid %>
+    </div>
+</div>
+

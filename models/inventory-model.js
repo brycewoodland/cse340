@@ -32,7 +32,7 @@ async function getVehicleDataById(inv_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory as i
-      WHERE i.inv_id = $1`,
+      WHERE i.inv_id = $1 AND i.is_approved = false`,
       [inv_id]
     )
     return data.rows[0];
@@ -153,4 +153,18 @@ async function approveClassification(classification_id) {
   }
 }
 
-module.exports = { getClassifications, getInventoryByClassificationId, getVehicleDataById, addClassification, addVehicle, updateInventory, deleteInventory, approveVehicle, approveClassification };
+/* ***************************
+ *  Fetch unapproved classifications
+ * ************************** */
+async function getUnapprovedClassifications() {
+  return await pool.query("SELECT * FROM public.classification WHERE classification_approved = false")
+}
+
+/* ***************************
+ *  Fetch unapproved inventory
+ * ************************** */
+async function getUnapprovedInventory() {
+  return await pool.query("SELECT * FROM public.inventory WHERE inv_approved = false")
+}
+
+module.exports = { getClassifications, getInventoryByClassificationId, getVehicleDataById, addClassification, addVehicle, updateInventory, deleteInventory, approveVehicle, approveClassification, getUnapprovedClassifications, getUnapprovedInventory };

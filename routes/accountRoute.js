@@ -26,4 +26,7 @@ router.post('/update/', utilities.checkLogin, regValidate.updateDetailRules(), r
 // Change Password
 router.post('/update-password/', regValidate.registrationRules(), utilities.handleErrors(accountController.changePassword))
 
+// Unapproved Items
+router.get('/unapproved-items', utilities.checkLogin, utilities.handleErrors(accountController.buildUnapprovedItems))
+
 module.exports = router

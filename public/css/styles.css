@@ -560,6 +560,21 @@ input:required:focus:valid {
 /******* 4.0 General *************/
 @media (min-width: 820px) {
 
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+  
+  .flex-item {
+    width: 45%; /* Adjust as needed */
+  }
+
+  #classification, #inventory {
+    text-decoration: underline;
+    color: #007bff;
+  }
+
   /******* 4.1 Header *************/
   .siteName {
     font-size: 3rem;
