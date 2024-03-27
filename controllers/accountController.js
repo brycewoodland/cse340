@@ -280,18 +280,29 @@ async function buildApproveClassification(req, res, next) {
 async function approveClassification(req, res, next) {
   let nav = await utilities.getNav()
   const classification_id = req.params.classification_id
-  const result = await invModel.approveClassification(classification_id)
-  if (result) {
-    req.flash("notice", "Classification approved.")
-    res.redirect("/account/unapproved-items")
-  } else {
-    req.flash("notice", "Sorry, the classification approval failed.")
-    res.render("account/unapproved-items", {
-      title: "Unapproved Items",
-      nav,
-      grid,
-    })
-  }
+
+  jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
+    if (err) {
+      req.flash("notice", "Sorry, you must be logged in to approve a classification.")
+      res.redirect("/account/login")
+    } else {
+      const account_id = user.account_id
+      const classification_approval_date = new Date().toISOString().slice(0, 19).replace('T', ' ')
+
+      const result = await invModel.approveClassification(classification_id, account_id, classification_approval_date)
+      if (result) {
+        req.flash("notice", "Classification approved.")
+        res.redirect("/account/unapproved-items")
+      } else {
+        req.flash("notice", "Sorry, the classification approval failed.")
+        res.render("account/unapproved-items", {
+          title: "Unapproved Items",
+          nav,
+          grid,
+        })
+      }
+    }
+  });
 }
 
 /* ****************************************
@@ -320,25 +331,38 @@ async function rejectClassification(req, res, next) {
 async function approveInventory(req, res, next) {
   let nav = await utilities.getNav()
   const inv_id  = req.params.inv_id
-  const isApproved = await invModel.checkIfApproved(inv_id)
-  
-  if (!isApproved) {
-    req.flash("notice", "Classification must be approved before inventory can be approved.")
-    res.redirect("/account/unapproved-items")
-  } else {
-      const result = await invModel.approveVehicle(inv_id)
-      if (!result) {
-        req.flash("notice", "Sorry, the inventory approval failed.")
-        res.render("account/unapproved-items", {
-          title: "Unapproved Items",
-          nav
-        })
+
+  jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
+    if (err) {
+      req.flash("notice", "Sorry, you must be logged in to approve inventory.")
+      res.redirect("/account/login")
     } else {
-      req.flash("notice", "Inventory approved.")
-      res.redirect("/account/unapproved-items")
+      const account_id = user.account_id
+      const inv_approved_date = new Date().toISOString().slice(0, 19).replace('T', ' ')
+      const isApproved = await invModel.checkIfApproved(inv_id)
+
+      if (!isApproved) {
+        req.flash("notice", "Classification must be approved before inventory can be approved.")
+        res.redirect("/account/unapproved-items")
+      } else {
+          const result = await invModel.approveVehicle(inv_id, account_id, inv_approved_date)
+          if (!result) {
+            req.flash("notice", "Sorry, the inventory approval failed.")
+            res.render("account/unapproved-items", {
+              title: "Unapproved Items",
+              nav
+            })
+        } else {
+          req.flash("notice", "Inventory approved.")
+          res.redirect("/account/unapproved-items")
+        }
+      }
     }
-  }
+    });
 }
+ 
+  
+
 
 
 /* ****************************************

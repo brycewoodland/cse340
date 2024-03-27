@@ -125,32 +125,21 @@ async function deleteInventory(inv_id) {
 }
 
 /* ***************************
- *  Check if inv item is approved
+ *  Approve vehicle
  * ************************** */
-async function approveVehicle(inv_id) {
+async function approveVehicle(inv_id, account_id, inv_approved_date) {
   try {
     const data = await pool.query(
-      `UPDATE public.inventory SET inv_approved = true WHERE inv_id = $1`,
-      [inv_id]
+      `UPDATE public.inventory 
+       SET inv_approved = true,
+       account_id = $2,
+       inv_approved_date = $3
+       WHERE inv_id = $1`,
+      [inv_id, account_id, inv_approved_date]
     )
     return data
   } catch (error) {
     console.error("approveVehicle error " + error)
-  }
-}
-
-/* ***************************
- *  Check if classification is approved
- * ************************** */
-async function approveClassification(classification_id) {
-  try {
-    const data = await pool.query(
-      `UPDATE public.classification SET is_approved = true WHERE classification_id = $1`,
-      [classification_id]
-    )
-    return data
-  } catch (error) {
-    console.error("approveClassification error " + error)
   }
 }
 
@@ -180,11 +169,15 @@ async function getUnapprovedInventory() {
 /* ***************************
 *  Approve classification
 * ************************** */
-async function approveClassification(classification_id) {
+async function approveClassification(classification_id, account_id, classification_approval_date) {
   try {
     const data = await pool.query(
-      `UPDATE public.classification SET classification_approved = true WHERE classification_id = $1`,
-      [classification_id]
+      `UPDATE public.classification 
+       SET classification_approved = true,
+       account_id = $2,
+       classification_approval_date = $3
+       WHERE classification_id = $1`,
+      [classification_id, account_id, classification_approval_date]
     )
     return data
   } catch (error) {
