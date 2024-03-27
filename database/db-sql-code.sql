@@ -269,16 +269,6 @@ UPDATE public.inventory
 SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
 inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
 
-Select * FROM public.inventory;
-
-SELECT * FROM public.account;
-
-SELECT * FROM public.classification;
-
-DELETE FROM public.classification WHERE classification_id = 64;
-
-DELETE FROM public.classification WHERE classification_id = 62;
-
 -- change user to admin
 UPDATE public.account SET account_type = 'Employee' WHERE account_id = 17;
 

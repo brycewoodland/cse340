@@ -338,12 +338,20 @@ async function approveInventory(req, res, next) {
   let nav = await utilities.getNav()
   const inv_id  = req.params.inv_id
   const inventory = await invModel.getUnapprovedInventory()
-  const result = await invModel.approveVehicle(inv_id)
   let grid, invGrid = await utilities.buildUnapprovedInventory(inventory.rows)
-  if (result) {
-    req.flash("notice", "Inventory approved.")
+  const isApproved = await invModel.checkIfApproved(inv_id)
+  
+  if (!isApproved) {
+    req.flash("notice", "Classification must be approved before inventory can be approved.")
     res.redirect("/account/unapproved-items")
   } else {
+    await invModel.approveVehicle(inv_id)
+    req.flash("notice", "Inventory approved.")
+    res.redirect("/account/unapproved-items")
+  } 
+  
+  const result = await invModel.approveInventory(inv_id)
+  if (!result) {
     req.flash("notice", "Sorry, the inventory approval failed.")
     res.render("account/unapproved-items", {
       title: "Unapproved Items",
@@ -353,6 +361,7 @@ async function approveInventory(req, res, next) {
     })
   }
 }
+
 
 /* ****************************************
 * Reject Inventory

@@ -246,6 +246,24 @@ async function getByClassificationId(classification_id) {
   }
 }
 
+/* ***************************
+ * Check if the Classification is approved
+ * ************************** */
+async function checkIfApproved(inv_id) {
+  try {
+    const data = await pool.query(
+      `SELECT c.classification_approved
+      FROM public.inventory AS i
+      JOIN public.classification AS c on i.classification_id = c.classification_id
+      WHERE i.inv_id = $1`,
+      [inv_id]
+    )
+      return data.rows[0].classification_approved;
+  } catch (error)
+  {
+    console.error("checkIfApproved error " + error)
+  }
+}
 
 
 module.exports = { 
@@ -263,5 +281,6 @@ module.exports = {
   getInventoryDataById,
   getByClassificationId,
   rejectClassification,
-  rejectInventory
+  rejectInventory,
+  checkIfApproved
 };
