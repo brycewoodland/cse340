@@ -122,9 +122,7 @@ Util.buildUnapprovedInventory = async function (req, res, next) {
   for (let item of inventory.rows) {
     invGrid += '<div class="grid-item">'
     invGrid += '<h2>' + item.inv_make + ' ' + item.inv_model + '</h2>'
-    invGrid += '<a href="/account/approve-inventory/' + item.inv_id + '">Approve</a>'
-    invGrid += '                  '
-    invGrid += '<a href="/account/delete-inventory/' + item.inv_id + '"> Reject</a>'
+    invGrid += '<a href="/account/approve-inventory/' + item.inv_id + '">View Information</a>'
     invGrid += '</div>'
   }
   invGrid += '</div>'

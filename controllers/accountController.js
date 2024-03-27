@@ -272,6 +272,10 @@ async function buildApproveClassification(req, res, next) {
   }
 }
 
+/* ****************************************
+* Approve Classification
+* *************************************** */
+
 async function approveClassification(req, res, next) {
   let nav = await utilities.getNav()
   const classification_id = req.params.classification_id
@@ -289,6 +293,21 @@ async function approveClassification(req, res, next) {
   }
 }
 
+/* ****************************************
+* Build Inventory Approval View
+* *************************************** */
+async function buildInventoryApproval(req, res, next) {
+  let nav = await utilities.getNav()
+  let inventory = await invModel.getVehicleDataById(req.params.inv_id)
+  let vehicleView = await utilities.buildVehicleView(inventory)
+  res.render("account/approve-inventory", {
+    title: "Inventory Approval",
+    nav,
+    vehicleView,
+    errors: null
+  })
+}
+
 module.exports = { 
   buildLogin, 
   buildRegister, 
@@ -301,5 +320,6 @@ module.exports = {
   changePassword, 
   buildUnapprovedItems,
   buildApproveClassification,
-  approveClassification
+  approveClassification,
+  buildInventoryApproval
  }
