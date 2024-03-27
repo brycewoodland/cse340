@@ -8,7 +8,8 @@ const invCont = {}
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
-  const data = await invModel.approveVehicle(classification_id)
+  const data = await invModel.getInventoryByClassificationId(classification_id) // Changed this line
+  console.log(`Data returned by model: ${data}`)
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
   const className = data[0].classification_name
@@ -24,7 +25,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
  * **************************************** */
 invCont.buildVehicleById = async function (req, res, next) {
   const inv_id = req.params.invId
-  const data = await invModel.approveVehicle(inv_id)
+  const data = await invModel.getVehicleDataById(inv_id)
   const grid = await utilities.buildVehicleView(data)
   let nav = await utilities.getNav()
   const title = data.inv_make + " " + data.inv_model
@@ -157,7 +158,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 invCont.buildEditInventory = async function (req, res, next) {
   const inv_id = parseInt(req.params.invId)
   let nav = await utilities.getNav()
-  const itemData = await invModel.getVehicleDataById(inv_id)
+  const itemData = await invModel.getInventoryDataById(inv_id)
   const list = await utilities.buildClassificationList(itemData.classification_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
   res.render("./inventory/edit-inventory", {
@@ -299,5 +300,6 @@ invCont.deleteInventoryPost = async function (req, res, next) {
     })
   }
 }
+
 
 module.exports = invCont

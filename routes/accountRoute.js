@@ -35,4 +35,7 @@ router.post('/approve-classification/:classification_id', utilities.checkLogin, 
 // Deliver Inventory Approval View
 router.get('/approve-inventory/:inv_id', utilities.checkLogin, utilities.handleErrors(accountController.buildInventoryApproval))
 
+// Approve Inventory
+router.post('/approve-inventory/:inv_id', utilities.checkLogin, utilities.handleErrors(accountController.approveInventory))
+
 module.exports = router

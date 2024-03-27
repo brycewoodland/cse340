@@ -264,7 +264,8 @@ async function buildApproveClassification(req, res, next) {
     res.render("account/approve-classification", {
       title: "Approve Classification",
       nav,
-      result
+      result,
+      classification_id
     })
   } else {
     req.flash("notice", "Sorry, the classification approval failed.")
@@ -298,14 +299,39 @@ async function approveClassification(req, res, next) {
 * *************************************** */
 async function buildInventoryApproval(req, res, next) {
   let nav = await utilities.getNav()
-  let inventory = await invModel.getVehicleDataById(req.params.inv_id)
+  let inv_id = req.params.inv_id
+  let inventory = await invModel.getInventoryDataById(req.params.inv_id)
   let vehicleView = await utilities.buildVehicleView(inventory)
   res.render("account/approve-inventory", {
     title: "Inventory Approval",
     nav,
     vehicleView,
-    errors: null
+    inv_id,
+    errors: null,
   })
+}
+
+/* ****************************************
+* Approve Inventory
+* *************************************** */
+async function approveInventory(req, res, next) {
+  let nav = await utilities.getNav()
+  const inv_id  = req.params.inv_id
+  const inventory = await invModel.getUnapprovedInventory()
+  const result = await invModel.approveVehicle(inv_id)
+  let grid, invGrid = await utilities.buildUnapprovedInventory(inventory.rows)
+  if (result) {
+    req.flash("notice", "Inventory approved.")
+    res.redirect("/account/unapproved-items")
+  } else {
+    req.flash("notice", "Sorry, the inventory approval failed.")
+    res.render("account/unapproved-items", {
+      title: "Unapproved Items",
+      nav,
+      grid,
+      invGrid
+    })
+  }
 }
 
 module.exports = { 
@@ -321,5 +347,6 @@ module.exports = {
   buildUnapprovedItems,
   buildApproveClassification,
   approveClassification,
-  buildInventoryApproval
+  buildInventoryApproval,
+  approveInventory
  }

@@ -236,4 +236,21 @@ Util.checkAccountType = (req, res, next) => {
   }
 }
 
+/* ****************************************
+* Middleware to check if classification is approved
+**************************************** */
+Util.checkClassificationApproval = async function (req, res, next) {
+  const classification_id = req.body.classification_id
+  const classificationData = await invModel.getByClassificationId(classification_id)
+  console.log(`Classification Data returnd: ${classificationData}`)
+  const classification_approved = classificationData.classification_approved
+
+  if (classification_approved !== true) {
+    req.flash("notice", "Cannot add inventory item: classification is not approved")
+    res.redirect('/account/unapproved-items')
+  } else {
+    next()
+  }
+}
+
 module.exports = Util

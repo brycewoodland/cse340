@@ -16,7 +16,7 @@ async function getInventoryByClassificationId(classification_id) {
       `SELECT * FROM public.inventory AS i 
       JOIN public.classification AS c 
       ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1 AND c.classification_approved = true`,
+      WHERE i.classification_id = $1 AND c.classification_approved = true AND i.inv_approved = true`,
       [classification_id]
     )
     return data.rows
@@ -32,9 +32,10 @@ async function getVehicleDataById(inv_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory as i
-      WHERE i.inv_id = $1 AND i.inv_approved = false`,
+      WHERE i.inv_id = $1 AND i.inv_approved = true`,
       [inv_id]
     )
+    console.log(data.rows[0])
     return data.rows[0];
   } catch (error) {
     console.error("getVehicleData error " + error)
@@ -47,7 +48,7 @@ async function getVehicleDataById(inv_id) {
 async function addClassification(classification_name) {
   try {
     const data = await pool.query(
-      `INSERT INTO public.classification (classification_name, is_approved) VALUES ($1, $2)`,
+      `INSERT INTO public.classification (classification_name, classification_approved) VALUES ($1, $2)`,
       [classification_name, false]
     )
     return data
@@ -62,8 +63,8 @@ async function addClassification(classification_name) {
 async function addVehicle(classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) {
   try {
     const data = await pool.query(
-      `INSERT INTO public.inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, is_approved) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+      `INSERT INTO public.inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, inv_approved) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
       [classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, false]
     )
     return data
@@ -126,10 +127,10 @@ async function deleteInventory(inv_id) {
 /* ***************************
  *  Check if inv item is approved
  * ************************** */
-async function approveVehicle(inv_id) {
+async function approveVehicle(inv_id, account_id) {
   try {
     const data = await pool.query(
-      `UPDATE public.inventory SET is_approved = true WHERE inv_id = $1`,
+      `UPDATE public.inventory SET inv_approved = true WHERE inv_id = $1`,
       [inv_id]
     )
     return data
@@ -182,6 +183,39 @@ async function approveClassification(classification_id) {
   }
 }
 
+/* ***************************
+*  Approve inventory
+* ************************** */
+async function getInventoryDataById(inv_id) {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.inventory as i
+      WHERE i.inv_id = $1`,
+      [inv_id]
+    )
+    console.log(data.rows[0])
+    return data.rows[0];
+  } catch (error) {
+    console.error("getVehicleData error " + error)
+  }
+}
+
+/* ***************************
+ *  Get all inventory items and classification_name by classification_id
+ * ************************** */
+async function getByClassificationId(classification_id) {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.classification AS c 
+      WHERE c.classification_id = $1 AND c.classification_approved = true`,
+      [classification_id]
+    )
+    return data.rows[0]
+  } catch (error) {
+    console.error("getclassificationsbyid error " + error)
+  }
+}
+
 module.exports = { 
   getClassifications, 
   getInventoryByClassificationId, 
@@ -194,5 +228,6 @@ module.exports = {
   approveClassification, 
   getUnapprovedClassifications, 
   getUnapprovedInventory,
-  approveClassification
+  getInventoryDataById,
+  getByClassificationId
 };
