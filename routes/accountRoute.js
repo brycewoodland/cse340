@@ -41,4 +41,7 @@ router.get('/approve-inventory/:inv_id', utilities.checkLogin, utilities.handleE
 // Approve Inventory
 router.post('/approve-inventory/:inv_id', utilities.checkLogin, utilities.handleErrors(accountController.approveInventory))
 
+// Reject Inventory
+router.post('/reject-inventory/:inv_id', utilities.checkLogin, utilities.handleErrors(accountController.rejectInventory))
+
 module.exports = router

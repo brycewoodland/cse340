@@ -216,6 +216,21 @@ async function getInventoryDataById(inv_id) {
 }
 
 /* ***************************
+ *  Reject Inventory
+ * ************************** */
+async function rejectInventory(inv_id) {
+  try {
+    const data = await pool.query(
+      `DELETE FROM public.inventory WHERE inv_id = $1`,
+      [inv_id]
+    )
+    return data
+  } catch (error) {
+    console.error("rejectInventory error " + error)
+  }
+}
+
+/* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
 async function getByClassificationId(classification_id) {
@@ -231,6 +246,8 @@ async function getByClassificationId(classification_id) {
   }
 }
 
+
+
 module.exports = { 
   getClassifications, 
   getInventoryByClassificationId, 
@@ -245,5 +262,6 @@ module.exports = {
   getUnapprovedInventory,
   getInventoryDataById,
   getByClassificationId,
-  rejectClassification
+  rejectClassification,
+  rejectInventory
 };

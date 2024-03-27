@@ -354,6 +354,29 @@ async function approveInventory(req, res, next) {
   }
 }
 
+/* ****************************************
+* Reject Inventory
+* *************************************** */
+async function rejectInventory(req, res, next) {
+  let nav = await utilities.getNav()
+  const inv_id = req.params.inv_id
+  const inventory = await invModel.getUnapprovedInventory()
+  const result = await invModel.rejectInventory(inv_id)
+  let grid, invGrid = await utilities.buildUnapprovedInventory(inventory.rows)
+  if (result) {
+    req.flash("notice", "Inventory rejected.")
+    res.redirect("/account/unapproved-items")
+  } else {
+    req.flash("notice", "Sorry, the inventory rejection failed.")
+    res.render("account/unapproved-items", {
+      title: "Unapproved Items",
+      nav,
+      grid,
+      invGrid
+    })
+  }
+}
+
 module.exports = { 
   buildLogin, 
   buildRegister, 
@@ -369,5 +392,6 @@ module.exports = {
   approveClassification,
   buildInventoryApproval,
   approveInventory,
-  rejectClassification
+  rejectClassification,
+  rejectInventory
  }
