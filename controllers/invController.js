@@ -158,7 +158,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 invCont.buildEditInventory = async function (req, res, next) {
   const inv_id = parseInt(req.params.invId)
   let nav = await utilities.getNav()
-  const itemData = await invModel.getInventoryDataById(inv_id)
+  const itemData = await invModel.getVehicleDataById(inv_id)
   const list = await utilities.buildClassificationList(itemData.classification_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
   res.render("./inventory/edit-inventory", {

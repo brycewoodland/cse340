@@ -256,27 +256,9 @@ async function buildUnapprovedItems(req, res, next) {
   })
 }
 
-async function buildApproveClassification(req, res, next) {
-  let nav = await utilities.getNav()
-  const classification_id = req.params.classification_id
-  const result = await invModel.getUnapprovedClassifications(classification_id)
-  if (result) {
-    res.render("account/approve-classification", {
-      title: "Approve Classification",
-      nav,
-      result,
-      classification_id
-    })
-  } else {
-    req.flash("notice", "Sorry, the classification approval failed.")
-    res.redirect("/account/unapproved-items")
-  }
-}
-
 /* ****************************************
 * Approve Classification
 * *************************************** */
-
 async function approveClassification(req, res, next) {
   let nav = await utilities.getNav()
   const classification_id = req.params.classification_id
@@ -360,10 +342,6 @@ async function approveInventory(req, res, next) {
     }
     });
 }
- 
-  
-
-
 
 /* ****************************************
 * Reject Inventory
@@ -399,7 +377,6 @@ module.exports = {
   updateAccount, 
   changePassword, 
   buildUnapprovedItems,
-  buildApproveClassification,
   approveClassification,
   approveInventory,
   rejectClassification,

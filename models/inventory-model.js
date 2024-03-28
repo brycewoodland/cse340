@@ -200,22 +200,6 @@ async function rejectClassification(classification_id) {
   }
 }
 
-/* ***************************
-*  Approve inventory
-* ************************** */
-async function getInventoryDataById(inv_id) {
-  try {
-    const data = await pool.query(
-      `SELECT * FROM public.inventory as i
-      WHERE i.inv_id = $1`,
-      [inv_id]
-    )
-    console.log(data.rows[0])
-    return data.rows[0];
-  } catch (error) {
-    console.error("getVehicleData error " + error)
-  }
-}
 
 /* ***************************
  *  Reject Inventory
@@ -229,22 +213,6 @@ async function rejectInventory(inv_id) {
     return data
   } catch (error) {
     console.error("rejectInventory error " + error)
-  }
-}
-
-/* ***************************
- *  Get all inventory items and classification_name by classification_id
- * ************************** */
-async function getByClassificationId(classification_id) {
-  try {
-    const data = await pool.query(
-      `SELECT * FROM public.classification AS c 
-      WHERE c.classification_id = $1 AND c.classification_approved = true`,
-      [classification_id]
-    )
-    return data.rows[0]
-  } catch (error) {
-    console.error("getclassificationsbyid error " + error)
   }
 }
 
@@ -293,8 +261,6 @@ module.exports = {
   approveClassification, 
   getUnapprovedClassifications, 
   getUnapprovedInventory,
-  getInventoryDataById,
-  getByClassificationId,
   rejectClassification,
   rejectInventory,
   checkIfApproved,

@@ -9,7 +9,8 @@ require('dotenv').config()
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
-  let list = '<ul>'
+  let list = '<button class="hamburger-menu" onclick="toggleMenu()">&#9776;</button>'
+  list += '<nav id="mobile-menu" class="mobile-menu"><ul>'
   list += '<li><a href="/" title="Home page">Home</a></li>'
   
   for (let row of data.rows) {
@@ -35,7 +36,7 @@ Util.getNav = async function (req, res, next) {
     }
   }
   
-  list += "</ul>"
+  list += "</ul></nav>"
   return list
 }
 
