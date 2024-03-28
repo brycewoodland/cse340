@@ -83,7 +83,6 @@ CSS Styles for CSE Motors
 
 #Welcome-message {
   font-weight: bold;
-  font-size: small;
   margin-right: 5px;
   margin-left: 5px;
 } 
@@ -160,7 +159,7 @@ nav ul li a:hover {
   color: white;
   padding: 1rem;
   position: absolute;
-  top: 40%;
+  top: 55%;
   left: 20%;
   transform: translate(-50%, -50%);
   padding: 5px;
@@ -337,7 +336,7 @@ img {
 }
 
 .login-container form {
-  width: 400px;
+  width: 300px;
   background-color: rgb(21, 222, 236);
   padding: 1rem;
   border-radius: 8px;
@@ -594,6 +593,11 @@ form input.link-button:hover {
   color: #0056b3; /* Darken color on hover */
 }
 
+#classification, #inventory {
+  text-decoration: underline;
+  color: #007bff;
+}
+
 /******* Media Queries *************/
 /******* 4.0 General *************/
 @media (min-width: 820px) {
@@ -606,11 +610,6 @@ form input.link-button:hover {
   
   .flex-item {
     width: 45%; /* Adjust as needed */
-  }
-
-  #classification, #inventory {
-    text-decoration: underline;
-    color: #007bff;
   }
 
   /******* 4.1 Header *************/
@@ -764,4 +763,16 @@ form input.link-button:hover {
   .add-inventory-form form {
     width: 400px;
   }
+
+  .login-container form {
+    width: 400px;
+    background-color: rgb(21, 222, 236);
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  #account-update form {
+    width: 100px;
+  }
 }
+
