@@ -71,7 +71,7 @@ invCont.addClassification = async function (req, res) {
   const result = await invModel.addClassification(classification_name)
 
   if (result) {
-    req.flash("notice", "Classification added successfully.")
+    req.flash("notice", "Classification added successfully and is pending approval.")
     res.status(201).redirect("/inv")
   } else {
     req.flash("notice", "Sorry, there was an error adding the classification.")
@@ -128,7 +128,7 @@ invCont.addInventory = async function (req, res) {
     )
 
   if (result) {
-    req.flash("notice", "Vehicle added successfully to the inventory.")
+    req.flash("notice", "Vehicle added successfully to the inventory and is pending approval.")
     res.status(201).redirect("/inv")
   } else {
     req.flash("notice", "Sorry, there was an error adding the vehicle to the inventory.")
