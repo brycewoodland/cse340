@@ -38,7 +38,7 @@
         <input type="text" id="inv_miles" name="inv_miles" value="<%= locals.inv_miles %>" required>
         <label for="inv_color">Color:</label>
         <input type="text" id="inv_color" name="inv_color" value="<%= locals.inv_color %>" required>
-        <button type="submit" disabled>Update Vehicle</button>
+        <button id="update-button" type="submit" disabled>Update Vehicle</button>
         <input type="hidden" name="inv_id"
         <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
         <% } %>>
