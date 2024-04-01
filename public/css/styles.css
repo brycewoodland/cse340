@@ -771,8 +771,8 @@ form input.link-button:hover {
     border-radius: 8px;
   }
 
-  #account-update form {
-    width: 100px;
+  account-update form {
+    width: 200px;
   }
 }
 
