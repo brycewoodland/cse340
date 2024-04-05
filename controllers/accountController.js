@@ -1,6 +1,7 @@
 const utilities = require("../utilities")
 const accountModel = require("../models/account-model")
 const invModel = require("../models/inventory-model")
+const { validationResult } = require("express-validator")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -222,6 +223,12 @@ async function updateAccount(req, res, next) {
 * Password Change
 * *************************************** */
 async function changePassword(req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    req.flash("notice", "Password does not meet the specified requirements.")
+    return res.redirect("/account/")
+  }
+
   let nav = await utilities.getNav()
   const { account_id, account_password } = req.body
   console.log(req.body)
