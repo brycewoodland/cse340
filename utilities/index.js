@@ -92,27 +92,27 @@ Util.buildVehicleView = async function (data) {
   return grid;
 };
 
-/* **********************
+/* ***********************
 * Build unapproved items
-* ********************* */
+* ********************** */
 Util.buildUnapprovedClassifications = async function (req, res, next) {
   let classifications = await invModel.getUnapprovedClassifications()
-  let grid = '<h2 id="classification">Classifications</h2>'
-  grid += '<div class="grid=container">'
+  let table = '<h2 id="classification">Classifications</h2>'
+  table += '<table>'
+  table += '<tr><th>Name</th><th>Approve</th><th>Reject</th></tr>'
   for (let item of classifications.rows) {
-    grid += '<div class="grid-item">'
-    grid += '<h2>' + item.classification_name + '</h2>'
-    grid += '<form method="POST" action="/account/approve-classification/' + item.classification_id + '">'
-    grid += '<input type="submit" value="Approve" class="link-button">'
-    grid += '</form>'
-    grid += '                  '
-    grid += '<form method="POST" action="/account/reject-classification/' + item.classification_id + '">'
-    grid += '<input type="submit" value="Reject" class="link-button">'
-    grid += '</form>'
-    grid += '</div>'
+    table += '<tr>'
+    table += '<td>' + item.classification_name + '</td>'
+    table += '<td><form method="POST" action="/account/approve-classification/' + item.classification_id + '">'
+    table += '<input type="submit" value="Approve" class="link-button">'
+    table += '</form></td>'
+    table += '<td><form method="POST" action="/account/reject-classification/' + item.classification_id + '">'
+    table += '<input type="submit" value="Reject" class="link-button">'
+    table += '</form></td>'
+    table += '</tr>'
   }
-  grid += '</div>'
-  return grid;
+  table += '</table>'
+  return table;
 };
 
 /* ****************************************
@@ -120,21 +120,23 @@ Util.buildUnapprovedClassifications = async function (req, res, next) {
 ***************************************** */
 Util.buildUnapprovedInventory = async function (req, res, next) {
   let inventory = await invModel.getUnapprovedInventory()
-  let invGrid = '<h2 id="inventory">Inventory</h2>'
-  invGrid += '<div class="grid-container">'
+  let invTable = '<h2 id="inventory">Inventory</h2>'
+  invTable += '<table>'
+  invTable += '<tr><th>Item</th><th>Classification</th><th>Approve</th><th>Reject</th></tr>'
   for (let item of inventory) {
-    invGrid += '<div class="grid-item">'
-    invGrid += '<h2>' + item.inv_make + ' ' + item.inv_model + ' - '  + item.classification_name + '</h2>'
-    invGrid += '<form method="POST" action="/account/approve-inventory/' + item.inv_id + '">'
-    invGrid += '<input type="submit" value="Approve" class="link-button">'
-    invGrid += '</form>'
-    invGrid += '<form method="POST" action="/account/reject-inventory/' + item.inv_id + '">'
-    invGrid += '<input type="submit" value="Reject" class="link-button">'
-    invGrid += '</form>'
-    invGrid += '</div>'
+    invTable += '<tr>'
+    invTable += '<td>' + item.inv_make + ' ' + item.inv_model + '</td>'
+    invTable += '<td>' + item.classification_name + '</td>'
+    invTable += '<td><form method="POST" action="/account/approve-inventory/' + item.inv_id + '">'
+    invTable += '<input type="submit" value="Approve" class="link-button">'
+    invTable += '</form></td>'
+    invTable += '<td><form method="POST" action="/account/reject-inventory/' + item.inv_id + '">'
+    invTable += '<input type="submit" value="Reject" class="link-button">'
+    invTable += '</form></td>'
+    invTable += '</tr>'
   }
-  invGrid += '</div>'
-  return invGrid;
+  invTable += '</table>'
+  return invTable;
 };
   
 
